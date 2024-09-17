@@ -10,4 +10,11 @@ public class Define
         Down = 0x04,
         Left = 0x08,
     }
+
+    public enum State
+    {
+        Idle= 0,
+        Move = 1,
+        Die = 2,
+    }
 }
