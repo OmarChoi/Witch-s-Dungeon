@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using UnityEngine;
 
 public class Define
@@ -16,5 +17,21 @@ public class Define
         Idle= 0,
         Move = 1,
         Die = 2,
+    }
+
+    public class Status
+    {
+        public float MaxHp;
+        public float CurrentHp;
+        public float Speed;
+        public float Damage;
+
+        public Status(float hp = 0.0f, float speed = 0.0f, float damage = 0.0f)
+        {
+            MaxHp = hp;
+            CurrentHp = hp;
+            Speed = speed;
+            Damage = damage;
+        }
     }
 }

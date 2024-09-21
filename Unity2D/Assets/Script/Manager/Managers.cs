@@ -6,14 +6,14 @@ public class Managers : MonoBehaviour
     static Managers s_Manager;
     static Managers Manager { get { Init(); return s_Manager; } }
 
-    ResourceManager m_resourceManager = new ResourceManager();
-    PoolManager m_poolManager = new PoolManager();
-    DataManager m_dataManager = new DataManager();
-    UIManager m_uiManager = new UIManager();
-    public static ResourceManager Resource { get { return Manager.m_resourceManager; } }
-    public static PoolManager Pool { get { return Manager.m_poolManager; } }
-    public static DataManager Data { get { return Manager.m_dataManager; } }
-    public static UIManager UI { get { return Manager.m_uiManager; } }
+    ResourceManager resourceManager = new ResourceManager();
+    PoolManager poolManager = new PoolManager();
+    DataManager dataManager = new DataManager();
+    UIManager uiManager = new UIManager();
+    public static ResourceManager Resource { get { return Manager.resourceManager; } }
+    public static PoolManager Pool { get { return Manager.poolManager; } }
+    public static DataManager Data { get { return Manager.dataManager; } }
+    public static UIManager UI { get { return Manager.uiManager; } }
 
     private void Start()
     {
@@ -32,6 +32,7 @@ public class Managers : MonoBehaviour
             }
             s_Manager = obj.GetComponent<Managers>();
             Resource.Init();
+            Data.Init();
         }
     }
 

@@ -4,6 +4,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : ControllerBase
 {
+    public override void Init()
+    {
+        base.Init();
+        Speed = 5;
+    }
+
     protected override void UpdateTransform()
     {
         base.UpdateTransform();
