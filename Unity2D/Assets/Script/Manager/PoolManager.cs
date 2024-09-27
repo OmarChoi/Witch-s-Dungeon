@@ -20,7 +20,15 @@ public class PoolManager
         if (!m_pools.ContainsKey(key))
         {
             GameObject gameObject = new GameObject { name = key };
-            gameObject.transform.parent = m_poolRoot;
+            if(parent == null)
+            {
+                gameObject.transform.parent = m_poolRoot;
+            }
+            else
+            {
+                gameObject.transform.parent = parent;
+                parent.parent = m_poolRoot;
+            }
             PoolObject pool = new PoolObject(key, initialSize, gameObject.transform);
             m_pools[key] = pool;
         }

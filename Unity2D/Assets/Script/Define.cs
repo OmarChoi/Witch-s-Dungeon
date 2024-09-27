@@ -19,6 +19,19 @@ public class Define
         Die = 2,
     }
 
+    public enum Monster
+    {
+        Ghost,
+        Jinn,
+        Minotauros,
+        Mouse,
+        Skeleton,
+        Slime,
+        Zombie,
+        MonsterTypeCount,
+    }
+
+
     public class Status
     {
         public float MaxHp;

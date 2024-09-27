@@ -31,6 +31,7 @@ public class Managers : MonoBehaviour
                 obj.AddComponent<Managers>();
             }
             s_Manager = obj.GetComponent<Managers>();
+            Pool.Init();
             Resource.Init();
             Data.Init();
         }

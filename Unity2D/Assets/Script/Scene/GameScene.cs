@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class GameScene : MonoBehaviour
 {
     GameObject playerCharacter;
+    List<GameObject> monsters = new List<GameObject>();
     GameSceneUI sceneUI;
-    List<ControllerBase> monsetrs = new List<ControllerBase>();
 
     double deltaTime = -1;
     double endTime = 5;
@@ -14,16 +16,6 @@ public class GameScene : MonoBehaviour
     void Start()
     {
         Init();
-        SpawnEnemy();
-    }
-
-    void Update()
-    {
-        for(int i = 0; i < monsetrs.Count; i++)
-        {
-            EnemyController controller = monsetrs[i] as EnemyController;
-            controller.UpdateTargetDirection(playerCharacter.transform.position);
-        }
     }
 
     public void Init()
@@ -35,32 +27,38 @@ public class GameScene : MonoBehaviour
         GameObject ui = UnityEngine.Object.Instantiate(go);
         sceneUI = ui.GetComponent<GameSceneUI>();
 
-        #region TempCode
+        GameObject monsterFolder = new GameObject { name = "Mosnters" };
         Managers.Resource.LoadResourcesInFolder<GameObject>("Prefabs/Monster");
-        string name = "Ghost";
-        Managers.Pool.CreatePool(name, 20);
-        #endregion
+
+        for(int i = 0 ; i < (int)Define.Monster.MonsterTypeCount;++i)
+        {
+            string name = Enum.GetName(typeof(Define.Monster), i);
+            Managers.Pool.CreatePool(name, 20, monsterFolder.transform);
+        }
 
         StartCoroutine(StartTimer());
+        SpawnEnemy();
     }
 
     private void SpawnEnemy()
     {
+        #region Test Code
         string name = "Ghost";
         for (int j = 0; j < 10; ++j)
         {
             GameObject monster = Managers.Pool.GetObject(name);
+            monsters.Add(monster);
             EnemyController controller = monster.GetComponent<EnemyController>();
             if (controller == null) 
             {
                 Debug.LogError("Monster Controller Doesn't Exist");
+                Application.Quit();
             }
-            monsetrs.Add(controller);
             int xPos = UnityEngine.Random.Range(-5, 5);
             int yPos = UnityEngine.Random.Range(-5, 5);
-            controller.SpawnMonster(new Vector2(xPos, yPos), j);
-            controller.StartMove(playerCharacter.transform.position);
+            controller.SpawnMonster(playerCharacter, new Vector2(xPos, yPos), j);
         }
+        #endregion
     }
 
     IEnumerator StartTimer()
