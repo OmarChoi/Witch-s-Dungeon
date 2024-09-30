@@ -11,7 +11,6 @@ public class GameScene : MonoBehaviour
     GameSceneUI sceneUI;
 
     double deltaTime = -1;
-    double endTime = 900;
 
     void Start()
     {
@@ -36,37 +35,45 @@ public class GameScene : MonoBehaviour
             Managers.Pool.CreatePool(name, 20, monsterFolder.transform);
         }
 
-        StartCoroutine(StartTimer());
         SpawnEnemy();
+        StartCoroutine(StartTimer());
     }
 
     private void SpawnEnemy()
     {
-        #region Test Code
-        string name = "Ghost";
-        for (int j = 0; j < 10; ++j)
+        int minuate = (int)deltaTime / 60;
+        
+        for (int i = 0; i < (int)Define.Monster.MonsterTypeCount; ++i)
         {
-            GameObject monster = Managers.Pool.GetObject(name);
-            monsters.Add(monster);
-            EnemyController controller = monster.GetComponent<EnemyController>();
-            if (controller == null) 
+            string name = Enum.GetName (typeof(Define.Monster), i);
+            int nMonsters = Managers.Data.GetMonsterDataByTime(minuate, i);
+            for (int j = 0; j < nMonsters; ++j)
             {
-                Debug.LogError("Monster Controller Doesn't Exist");
-                Application.Quit();
+                GameObject monster = Managers.Pool.GetObject(name);
+                monsters.Add(monster);
+                EnemyController controller = monster.GetComponent<EnemyController>();
+                if (controller == null)
+                {
+                    Debug.LogError($"{name} doesn't have controller");
+                }
+                Vector2 randomPos = UnityEngine.Random.insideUnitCircle * SpawnRange;
+                randomPos = UnityEngine.Random.insideUnitCircle * SpawnRange + (Vector2)playerCharacter.transform.position;
+                controller.SpawnMonster(playerCharacter, randomPos, monsters.Count);
             }
-            int xPos = UnityEngine.Random.Range(-5, 5);
-            int yPos = UnityEngine.Random.Range(-5, 5);
-            controller.SpawnMonster(playerCharacter, new Vector2(xPos, yPos), j);
         }
-        #endregion
+        // 플레이어 y 좌표 기준 상하 / 좌우 기준 일정 거리에 몬스터 소환
     }
 
     IEnumerator StartTimer()
     {
-        while (deltaTime < endTime)
+        while (deltaTime < Define.TotalTime * 60)
         {
             deltaTime += 1;
             sceneUI.UpdateTimer(deltaTime);
+            if(deltaTime % Define.SpawnCycle == 0)
+            {
+                SpawnEnemy();
+            }
             yield return new WaitForSeconds(1);
         }
         yield break;

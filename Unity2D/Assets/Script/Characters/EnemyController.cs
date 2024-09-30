@@ -12,8 +12,8 @@ public class EnemyController : ControllerBase
     public override void Init()
     {
         base.Init();
-        enemyType = transform.name;
-        Managers.Data.enemyData.TryGetValue(enemyType, out status);
+        enemyType = transform.name.Replace("(Clone)", "").Trim();
+        Managers.Data.GetMonsterStatusByName(enemyType, out status);
     }
 
     protected override void UpdateTransform()
@@ -24,6 +24,10 @@ public class EnemyController : ControllerBase
 
     public void UpdateTargetDirection()
     {
+        if (targetObject == null)
+        {
+            Debug.LogError($"{enemyType} doesn't have target");
+        }
         Vector2 targetPos = targetObject.position;
         Vector2 position = rigidBody.position;
         moveDirection = (targetPos - position).normalized;

@@ -16,6 +16,11 @@ public class PlayerController : ControllerBase
         GetKeyBoardInput();
     }
 
+    void LateUpdate()
+    {
+        Camera.main.transform.position = new Vector3(rigidBody.position.x, rigidBody.position.y, -10);
+    }
+
     protected override void UpdateTransform()
     {
         UpdateAnimation();
