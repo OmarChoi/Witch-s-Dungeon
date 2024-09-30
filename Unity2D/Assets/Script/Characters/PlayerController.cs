@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : ControllerBase
@@ -10,49 +11,25 @@ public class PlayerController : ControllerBase
         Speed = 5;
     }
 
+    public void Update()
+    {
+        GetKeyBoardInput();
+    }
+
     protected override void UpdateTransform()
     {
-        base.UpdateTransform();
-        GetKeyBoardInput();
         UpdateAnimation();
+        base.UpdateTransform();
     }
+
+    private void OnMove(InputValue value)
+    {
+        moveDirection = value.Get<Vector2>();
+    }
+
     void GetKeyBoardInput()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            direction |= Define.Direction.Up;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            direction |= Define.Direction.Down;
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            direction |= Define.Direction.Left;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            direction |= Define.Direction.Right;
-        }
-
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            direction ^= Define.Direction.Up;
-        }
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            direction ^= Define.Direction.Down;
-        }
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            direction ^= Define.Direction.Left;
-        }
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            direction ^= Define.Direction.Right;
-        }
-
-        if (direction == Define.Direction.None)
+        if (moveDirection.magnitude == 0)
             state = Define.State.Idle;
         else
             state = Define.State.Move;
@@ -64,9 +41,9 @@ public class PlayerController : ControllerBase
         {
             case Define.State.Move:
                 animator.Play("Move");
-                if ((direction & Define.Direction.Left) != 0)
+                if (moveDirection.x < 0)
                     spriteRenderer.flipX = true;
-                else if ((direction & Define.Direction.Right) != 0)
+                else
                     spriteRenderer.flipX = false;
                 break;
             case Define.State.Idle:

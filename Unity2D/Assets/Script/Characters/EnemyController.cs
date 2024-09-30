@@ -2,13 +2,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyController : ControllerBase
 {
-    int monsterId = 0;
     string enemyType = string.Empty;
-    Vector2 moveDirection = Vector2.zero;
-    GameObject targetObject = null;
+    Rigidbody2D targetObject = null;
 
     public override void Init()
     {
@@ -25,29 +24,21 @@ public class EnemyController : ControllerBase
 
     public void UpdateTargetDirection()
     {
-        Vector2 targetPos = targetObject.transform.position;
+        Vector2 targetPos = targetObject.position;
+        Vector2 position = rigidBody.position;
         moveDirection = (targetPos - position).normalized;
     }
 
     public void SpawnMonster(GameObject target, Vector2 pos, int id)
     {
-        position = new Vector3(pos.x, pos.y, 0);
-        transform.position = position;
-        targetObject = target;
+        rigidBody.position = new Vector3(pos.x, pos.y, 0);
+        targetObject = target.GetComponent<Rigidbody2D>();
     }
 
     private void UpdatePosition()
     {
         UpdateTargetDirection();
-        Vector2 nextPos = position + moveDirection * (Speed * 0.1f) * Time.deltaTime;
-        Vector2 targetPos = targetObject.transform.position;
-
-        float dist = Vector2.Distance(nextPos, targetPos);
-        if (dist > 1.0f)
-        {
-            position = nextPos;
-            transform.position = position;
-        }
+        base.UpdateTransform();
     }
 
     private void UpdateAnimation()

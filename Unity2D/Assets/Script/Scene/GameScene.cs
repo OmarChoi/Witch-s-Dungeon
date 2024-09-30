@@ -11,7 +11,7 @@ public class GameScene : MonoBehaviour
     GameSceneUI sceneUI;
 
     double deltaTime = -1;
-    double endTime = 5;
+    double endTime = 900;
 
     void Start()
     {
