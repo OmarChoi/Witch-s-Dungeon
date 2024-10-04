@@ -2,31 +2,31 @@ using UnityEngine;
 
 public class ControllerBase : MonoBehaviour
 {
-    protected Define.Direction direction = Define.Direction.None;
-    protected Define.State state = Define.State.Idle;
-    protected Define.Status status = new Define.Status();
     protected Animator animator;
-    protected SpriteRenderer spriteRenderer;
     protected Rigidbody2D rigidBody;
+    protected SpriteRenderer spriteRenderer;
+
     protected Vector2 moveDirection = Vector2.zero;
+    protected Define.Status status = new Define.Status();
 
     public float HP { get { return status.CurrentHp; } protected set { status.CurrentHp = value; } }
     public float MaxHp { get { return status.MaxHp; } protected set { status.CurrentHp = value; } }
     public float Speed { get { return status.Speed; } protected set { status.Speed = value; } }
     public float Damage { get { return status.Damage; } protected set { status.Damage = value; } }
 
-    public void Start()
-    {
-        Init();
-    }
-
     public void Awake()
     {
         Init();
     }
 
+    public void OnEnable()
+    {
+        ResetData();
+    }
+
     public virtual void Init()
     {
+        if (animator != null) return;
         animator = GetComponent<Animator>();
         if (animator == null)
         {
@@ -44,6 +44,12 @@ public class ControllerBase : MonoBehaviour
         }
     }
 
+    public virtual void ResetData()
+    {
+        HP = MaxHp;
+        moveDirection = Vector2.zero;
+    }
+
     private void FixedUpdate()
     {
         UpdateTransform();
@@ -55,5 +61,19 @@ public class ControllerBase : MonoBehaviour
         // check Can Go
         rigidBody.MovePosition(nextPos);
         rigidBody.velocity = Vector2.zero;
+    }
+
+    public void GetDamage(float damage)
+    {
+        HP -= damage;
+        if (HP < 0)
+        {
+            Dead();
+        }
+    }
+
+    protected virtual void Dead()
+    {
+
     }
 }

@@ -25,16 +25,21 @@ public class Define
 
     public enum Monster
     {
-        Ghost,
-        Jinn,
-        Minotauros,
         Mouse,
-        Skeleton,
         Slime,
+        Ghost,
+        Skeleton,
         Zombie,
+        Minotauros,
+        Jinn,
         MonsterTypeCount,
     }
 
+    public enum Layer
+    {
+        Attackable = 10,
+        Weapon = 11,
+    }
 
     public class Status
     {

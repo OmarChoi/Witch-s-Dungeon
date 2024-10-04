@@ -39,11 +39,23 @@ public class PoolObject
         return obj;
     }
 
+    public GameObject Get(Vector2 Position)
+    {
+        if (m_objects.Count == 0)
+        {
+            CreateObject(true);
+        }
+
+        GameObject obj = m_objects.Pop();
+        obj.transform.position = Position;
+        obj.SetActive(true);
+        return obj;
+    }
+
     public void Release(GameObject obj)
     {
         obj.SetActive(false);
         obj.transform.position = Vector3.zero;
         m_objects.Push(obj);
     }
-
 }

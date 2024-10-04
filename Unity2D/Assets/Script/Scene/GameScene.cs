@@ -6,13 +6,12 @@ using static Define;
 
 public class GameScene : MonoBehaviour
 {
-    GameObject playerCharacter;
+    public GameObject playerCharacter;
     List<GameObject> monsters = new List<GameObject>();
     GameSceneUI sceneUI;
-
     double deltaTime = -1;
 
-    void Start()
+    private void Awake()
     {
         Init();
     }
@@ -21,6 +20,7 @@ public class GameScene : MonoBehaviour
     {
         GameObject player = Resources.Load<GameObject>("Prefabs/Player");
         playerCharacter = UnityEngine.Object.Instantiate(player);
+        Managers.Player = playerCharacter;
 
         GameObject go = Resources.Load<GameObject>("Prefabs/GameSceneUI");
         GameObject ui = UnityEngine.Object.Instantiate(go);
@@ -35,7 +35,6 @@ public class GameScene : MonoBehaviour
             Managers.Pool.CreatePool(name, 20, monsterFolder.transform);
         }
 
-        SpawnEnemy();
         StartCoroutine(StartTimer());
     }
 
@@ -57,11 +56,10 @@ public class GameScene : MonoBehaviour
                     Debug.LogError($"{name} doesn't have controller");
                 }
                 Vector2 randomPos = UnityEngine.Random.insideUnitCircle * SpawnRange;
-                randomPos = UnityEngine.Random.insideUnitCircle * SpawnRange + (Vector2)playerCharacter.transform.position;
+                randomPos = UnityEngine.Random.insideUnitCircle * SpawnRange + (Vector2)playerCharacter.transform.position + new Vector2(5.0f, 5.0f);
                 controller.SpawnMonster(playerCharacter, randomPos, monsters.Count);
             }
         }
-        // 플레이어 y 좌표 기준 상하 / 좌우 기준 일정 거리에 몬스터 소환
     }
 
     IEnumerator StartTimer()

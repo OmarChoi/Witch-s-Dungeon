@@ -1,5 +1,6 @@
 using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Managers : MonoBehaviour
 {
@@ -10,10 +11,23 @@ public class Managers : MonoBehaviour
     PoolManager poolManager = new PoolManager();
     DataManager dataManager = new DataManager();
     UIManager uiManager = new UIManager();
+
+    static GameObject playerCharacter = null;
+
     public static ResourceManager Resource { get { return Manager.resourceManager; } }
     public static PoolManager Pool { get { return Manager.poolManager; } }
     public static DataManager Data { get { return Manager.dataManager; } }
     public static UIManager UI { get { return Manager.uiManager; } }
+
+    public static GameObject Player { get { return playerCharacter; } 
+        set
+        { 
+            if (playerCharacter == null)
+            {
+                playerCharacter = value;
+            }
+        }
+    }
 
     private void Start()
     {

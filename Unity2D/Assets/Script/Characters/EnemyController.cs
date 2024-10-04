@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyController : ControllerBase
 {
+    int mid = -1;
     string enemyType = string.Empty;
     Rigidbody2D targetObject = null;
 
@@ -19,7 +20,6 @@ public class EnemyController : ControllerBase
     protected override void UpdateTransform()
     {
         UpdatePosition();
-        UpdateAnimation();
     }
 
     public void UpdateTargetDirection()
@@ -35,8 +35,9 @@ public class EnemyController : ControllerBase
 
     public void SpawnMonster(GameObject target, Vector2 pos, int id)
     {
-        rigidBody.position = new Vector3(pos.x, pos.y, 0);
+        mid = id;
         targetObject = target.GetComponent<Rigidbody2D>();
+        rigidBody.position = new Vector3(pos.x, pos.y, 0);
     }
 
     private void UpdatePosition()
@@ -45,12 +46,9 @@ public class EnemyController : ControllerBase
         base.UpdateTransform();
     }
 
-    private void UpdateAnimation()
+    protected override void Dead()
     {
-        switch (state)
-        {
-            case Define.State.Move:
-                break;
-        }
+        this.gameObject.SetActive(false);
+        Managers.Pool.ReleaseObject(enemyType, this.gameObject);
     }
 }
