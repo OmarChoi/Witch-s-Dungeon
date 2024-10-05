@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class PoolObject
 {
-    private readonly string m_objName;
-    private readonly Stack<GameObject> m_objects = new Stack<GameObject>();
-    private readonly Transform m_parent;
+    private string m_objName;
+    private Stack<GameObject> m_objects = new Stack<GameObject>();
+    private Transform m_parent;
 
     public PoolObject(string objName, int initialSize, Transform parent = null)
     {
@@ -27,7 +27,7 @@ public class PoolObject
         return newObject;
     }
 
-    public GameObject Get()
+    public GameObject Get(Vector3 position = default(Vector3))
     {
         if (m_objects.Count == 0)
         {
@@ -35,19 +35,7 @@ public class PoolObject
         }
 
         GameObject obj = m_objects.Pop();
-        obj.SetActive(true);
-        return obj;
-    }
-
-    public GameObject Get(Vector2 Position)
-    {
-        if (m_objects.Count == 0)
-        {
-            CreateObject(true);
-        }
-
-        GameObject obj = m_objects.Pop();
-        obj.transform.position = Position;
+        obj.transform.position = position;
         obj.SetActive(true);
         return obj;
     }

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -6,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : ControllerBase
 {
     protected Define.State state = Define.State.Idle;
+
     public override void Init()
     {
         base.Init();

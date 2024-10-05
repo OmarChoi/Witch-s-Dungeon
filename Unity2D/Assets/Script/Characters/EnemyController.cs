@@ -28,8 +28,8 @@ public class EnemyController : ControllerBase
         {
             Debug.LogError($"{enemyType} doesn't have target");
         }
-        Vector2 targetPos = targetObject.position;
-        Vector2 position = rigidBody.position;
+        Vector3 targetPos = targetObject.position;
+        Vector3 position = rigidBody.position;
         moveDirection = (targetPos - position).normalized;
     }
 
@@ -48,7 +48,13 @@ public class EnemyController : ControllerBase
 
     protected override void Dead()
     {
-        this.gameObject.SetActive(false);
         Managers.Pool.ReleaseObject(enemyType, this.gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Projectile") != true) return;
+        float damage = collision.GetComponent<WeaponBase>().Damage;
+        GetDamage(damage);
     }
 }

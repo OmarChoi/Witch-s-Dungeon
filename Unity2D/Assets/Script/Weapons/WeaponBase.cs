@@ -13,12 +13,12 @@ public class WeaponBase : MonoBehaviour
 
     public float Damage { get { return damage; } protected set { damage = value; } }
 
-    private void Awake()
+    public void FixedUpdate()
     {
-        Init();
+        UpdatePosition();
     }
 
-    protected virtual void Init()
+    public virtual void Init()
     {
         targetLayer = (1 << (int)Define.Layer.Attackable);
     }
@@ -46,5 +46,9 @@ public class WeaponBase : MonoBehaviour
             }
         }
         return targetObject;
+    }
+    protected virtual void UpdatePosition()
+    {
+
     }
 }

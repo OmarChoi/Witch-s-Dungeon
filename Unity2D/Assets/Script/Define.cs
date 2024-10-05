@@ -35,6 +35,20 @@ public class Define
         MonsterTypeCount,
     }
 
+    public enum Weapon
+    {
+        Cutter,
+        FireField,
+        WeaponTypeCount
+    }
+
+    public enum Projectile
+    {
+       Shuriken,
+       Bird,
+       ProjectileTypeCount
+    }
+
     public enum Layer
     {
         Attackable = 10,

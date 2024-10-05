@@ -1,50 +1,14 @@
 fileFormatVersion: 2
-guid: fe0799308eea04b4b93db61a909f5234
+guid: 0120a297a850a534f89e912acdd0d9b3
 AssetOrigin:
   serializedVersion: 1
   productId: 212921
   packageName: 2D RPG topdown tilesets - pixelart assets FULL BUNDLE
   packageVersion: 2.7.4
-  assetPath: Assets/Gif/Super_Retro_Collection/Resources/Characters/Animals/bird1_16x20.png
+  assetPath: Assets/Gif/Super_Retro_Collection/Resources/Animations/Farm/farm_sickle_slash_48x48.png
   uploadId: 641484
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -2780974985107249056
-    second: bird1_16x20_0
-  - first:
-      213: -1393765761160276836
-    second: bird1_16x20_1
-  - first:
-      213: -7266900334406157069
-    second: bird1_16x20_2
-  - first:
-      213: -62066380578506294
-    second: bird1_16x20_3
-  - first:
-      213: 1464597892328664984
-    second: bird1_16x20_4
-  - first:
-      213: 978516138867732725
-    second: bird1_16x20_5
-  - first:
-      213: 1914879050664429912
-    second: bird1_16x20_6
-  - first:
-      213: 8091252921738061828
-    second: bird1_16x20_7
-  - first:
-      213: 1520198346572262914
-    second: bird1_16x20_8
-  - first:
-      213: -2354223145073998853
-    second: bird1_16x20_9
-  - first:
-      213: -6055483236507484149
-    second: bird1_16x20_10
-  - first:
-      213: -6638703591234115505
-    second: bird1_16x20_11
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -91,7 +55,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 18
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -166,13 +130,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bird1_16x20_0
+      name: farm_sickle_slash_48x48_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 60
-        width: 16
-        height: 20
+        y: 144
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0686f6b3cfdf769d0800000000000000
-      internalID: -2780974985107249056
+      spriteID: d840ba71b41e26441967fb223781883c
+      internalID: 723316508
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bird1_16x20_1
+      name: farm_sickle_slash_48x48_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 60
-        width: 16
-        height: 20
+        x: 48
+        y: 144
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,20 +167,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9490f9bc6958ace0800000000000000
-      internalID: -1393765761160276836
+      spriteID: f3c14a34ae0d3c94f8d1089511d3d4be
+      internalID: -870850285
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bird1_16x20_2
+      name: farm_sickle_slash_48x48_2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 60
-        width: 16
-        height: 20
+        x: 96
+        y: 144
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,86 +189,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3fcbd85c5a8c62b90800000000000000
-      internalID: -7266900334406157069
+      spriteID: 9918e8b48766e7649a7de11724512887
+      internalID: 770561586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bird1_16x20_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 40
-        width: 16
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac9bf19a4fe732ff0800000000000000
-      internalID: -62066380578506294
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bird1_16x20_4
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 40
-        width: 16
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 89f2907f50c435410800000000000000
-      internalID: 1464597892328664984
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bird1_16x20_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 40
-        width: 16
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5f0b2307e33649d00800000000000000
-      internalID: 978516138867732725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bird1_16x20_6
+      name: farm_sickle_slash_48x48_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 20
-        width: 16
-        height: 20
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -313,20 +211,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 859c0b2e954039a10800000000000000
-      internalID: 1914879050664429912
+      spriteID: 07c13ebf530e0d14d92725f3fca30f83
+      internalID: 882399459
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bird1_16x20_7
+      name: farm_sickle_slash_48x48_4
       rect:
         serializedVersion: 2
-        x: 16
-        y: 20
-        width: 16
-        height: 20
+        x: 48
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -335,20 +233,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 408e90cb9a7e94070800000000000000
-      internalID: 8091252921738061828
+      spriteID: 95af12e818bdf2144a72dcb1675aae70
+      internalID: -1715790426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bird1_16x20_8
+      name: farm_sickle_slash_48x48_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 20
-        width: 16
-        height: 20
+        x: 96
+        y: 96
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -357,20 +255,86 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20e63938754d81510800000000000000
-      internalID: 1520198346572262914
+      spriteID: 70a7cfbfa37eaea40af3a1fe0c21fb99
+      internalID: -1463649879
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bird1_16x20_9
+      name: farm_sickle_slash_48x48_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c693a08339e12b4e83b4d5975a9d979
+      internalID: 1877145938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_sickle_slash_48x48_7
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e7737e909aedca498ba849512387b23
+      internalID: -858212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_sickle_slash_48x48_8
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66a247687e56f884685e885c0134f12d
+      internalID: -718738681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: farm_sickle_slash_48x48_9
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 20
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -379,20 +343,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf38cd3d58e145fd0800000000000000
-      internalID: -2354223145073998853
+      spriteID: e00ab7df68c2bf348a7eef298a1bb7a3
+      internalID: 1589225296
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bird1_16x20_10
+      name: farm_sickle_slash_48x48_10
       rect:
         serializedVersion: 2
-        x: 16
+        x: 48
         y: 0
-        width: 16
-        height: 20
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -401,30 +365,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0083a8641a96fba0800000000000000
-      internalID: -6055483236507484149
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bird1_16x20_11
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f486163d1469ed3a0800000000000000
-      internalID: -6638703591234115505
+      spriteID: 92d95979b7aba4c4da8075795e0db5f5
+      internalID: -431056870
       vertices: []
       indices: 
       edges: []
@@ -441,18 +383,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      bird1_16x20_0: -2780974985107249056
-      bird1_16x20_1: -1393765761160276836
-      bird1_16x20_10: -6055483236507484149
-      bird1_16x20_11: -6638703591234115505
-      bird1_16x20_2: -7266900334406157069
-      bird1_16x20_3: -62066380578506294
-      bird1_16x20_4: 1464597892328664984
-      bird1_16x20_5: 978516138867732725
-      bird1_16x20_6: 1914879050664429912
-      bird1_16x20_7: 8091252921738061828
-      bird1_16x20_8: 1520198346572262914
-      bird1_16x20_9: -2354223145073998853
+      farm_sickle_slash_48x48_0: 723316508
+      farm_sickle_slash_48x48_1: -870850285
+      farm_sickle_slash_48x48_10: -431056870
+      farm_sickle_slash_48x48_2: 770561586
+      farm_sickle_slash_48x48_3: 882399459
+      farm_sickle_slash_48x48_4: -1715790426
+      farm_sickle_slash_48x48_5: -1463649879
+      farm_sickle_slash_48x48_6: 1877145938
+      farm_sickle_slash_48x48_7: -858212
+      farm_sickle_slash_48x48_8: -718738681
+      farm_sickle_slash_48x48_9: 1589225296
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

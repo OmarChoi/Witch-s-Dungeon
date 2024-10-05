@@ -34,11 +34,11 @@ public class PoolManager
         }
     }
 
-    public GameObject GetObject(string key)
+    public GameObject GetObject(string key, Vector3 position = default(Vector3))
     {
         if (m_pools.ContainsKey(key))
         {
-            return m_pools[key].Get();
+            return m_pools[key].Get(position);
         }
         Debug.LogError($"{key} Doesn't Exist");
         return null;

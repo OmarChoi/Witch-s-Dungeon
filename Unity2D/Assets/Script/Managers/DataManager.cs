@@ -94,4 +94,9 @@ public class DataManager
             }
         }
     }
+
+    public void LoadWeaponData()
+    {
+
+    }
 }
