@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7785933116270300717}
   - component: {fileID: 7807809855004123515}
   - component: {fileID: 1467973210943631835}
-  - component: {fileID: 554308957915520116}
+  - component: {fileID: 7414607056942699955}
   m_Layer: 11
   m_Name: Shuriken
   m_TagString: Projectile
@@ -158,7 +158,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.6, y: 0.6}
   m_EdgeRadius: 0
---- !u!114 &554308957915520116
+--- !u!114 &7414607056942699955
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,6 +167,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5656314777166176145}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080d4f61b47dcd9418ecca3e98d4e468, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cc1187391ce35849b178d6558285678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

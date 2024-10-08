@@ -40,7 +40,7 @@ public class PoolManager
         {
             return m_pools[key].Get(position);
         }
-        Debug.LogError($"{key} Doesn't Exist");
+        Debug.LogError($"Get Object Error Please Init the resource");
         return null;
     }
 

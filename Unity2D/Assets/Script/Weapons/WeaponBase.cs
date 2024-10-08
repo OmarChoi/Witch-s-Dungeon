@@ -1,40 +1,51 @@
-using NUnit.Framework;
+using System;
+using System.Collections;
 using UnityEngine;
 
-public class WeaponBase : MonoBehaviour
+public abstract class WeaponBase : MonoBehaviour
 {
-    protected float damage = 15.0f;
-    protected float attackRange = 2.0f;
-    protected Vector2 detectCenter = Vector2.zero;
+    Define.WeaponData weaponData = new Define.WeaponData();
+    protected Vector2 weaponPos = Vector2.zero;
 
+    public string weaponName = string.Empty;
     protected LayerMask targetLayer;
     protected Transform nearestTarget;
     protected Collider2D[] monstersInRange;
+    int currentLevel = -1;
 
-    public float Damage { get { return damage; } protected set { damage = value; } }
+    public float Damage { get { return weaponData.Damage; } }
+    public float Duration { get {  return weaponData.Duration; } }
+    public float AttackRange { get {  return weaponData.AttackRange; } }
+    public float AttackCycle { get { return weaponData.AttackCycle; } }
+
+    protected virtual void Awake()
+    {
+        targetLayer = (1 << (int)Define.Layer.Attackable);
+        weaponName = transform.name.Replace("(Clone)", "").Trim();
+    }
 
     public void FixedUpdate()
     {
-        UpdatePosition();
+        UpdateTransform();
     }
 
-    public virtual void Init()
-    {
-        targetLayer = (1 << (int)Define.Layer.Attackable);
-    }
+    public virtual void Init() { }
+
+    public abstract void UpdateTransform();
 
     protected void GetTargetInCircleArea()
     {
-        monstersInRange = Physics2D.OverlapCircleAll(detectCenter, attackRange, targetLayer, 0.0f, 0.0f);
+        monstersInRange = Physics2D.OverlapCircleAll(weaponPos, AttackRange, targetLayer, 0.0f, 0.0f);
     }
 
-    Transform GetNearestTarget()
+    protected Transform GetNearestTarget()
     {
         Transform targetObject = null;
-        float minDist = attackRange;
+        float minDist = AttackRange;
 
         foreach (Collider2D monster in monstersInRange)
         {
+            if (monster == null) continue;
             Vector3 playerPosition = transform.position;
             Vector3 targetPosition = monster.transform.position;
             float targetDist = Vector3.Distance(playerPosition, targetPosition);
@@ -47,8 +58,15 @@ public class WeaponBase : MonoBehaviour
         }
         return targetObject;
     }
-    protected virtual void UpdatePosition()
-    {
 
+    public virtual void SpawnWeapon(Vector2 startPosition, int level)
+    {
+        if (currentLevel != level)
+        {
+            Managers.Data.GetWeaponData(weaponName, level, ref weaponData);
+            currentLevel = level;
+        }
+        weaponPos = startPosition;
+        Init();
     }
 }

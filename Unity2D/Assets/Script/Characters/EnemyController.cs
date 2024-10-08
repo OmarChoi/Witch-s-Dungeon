@@ -54,7 +54,10 @@ public class EnemyController : ControllerBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Projectile") != true) return;
-        float damage = collision.GetComponent<WeaponBase>().Damage;
+        ProjectileBase weapon = collision.GetComponent<ProjectileBase>();
+        float damage = weapon.Damage;
         GetDamage(damage);
+        Collider2D collider = this.GetComponent<Collider2D>();
+        weapon.Ricocheted(collider);
     }
 }

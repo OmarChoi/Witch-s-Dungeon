@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2765569456052142124}
   - component: {fileID: 3918458549422140706}
   - component: {fileID: 2133891126039757011}
-  - component: {fileID: 7161032915268024077}
+  - component: {fileID: 5162000126261220020}
   m_Layer: 0
   m_Name: Bird
   m_TagString: Projectile
@@ -158,7 +158,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8, y: 0.6}
   m_EdgeRadius: 0
---- !u!114 &7161032915268024077
+--- !u!114 &5162000126261220020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,6 +167,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3382437642651752476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080d4f61b47dcd9418ecca3e98d4e468, type: 3}
+  m_Script: {fileID: 11500000, guid: 8eec60c2d9c8c874b95b4b8672f4f9de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

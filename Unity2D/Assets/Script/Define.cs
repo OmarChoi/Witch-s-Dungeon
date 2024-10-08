@@ -1,4 +1,5 @@
-using System.Xml.Linq;
+using System;
+using UnityEditor;
 using UnityEngine;
 
 public class Define
@@ -6,6 +7,7 @@ public class Define
     public const int TotalTime = 15;
     public const int SpawnCycle = 3;
     public const int SpawnRange = 15;
+    public const int MaxWeaponLevel = 5;
 
     public enum Direction : byte
     {
@@ -49,6 +51,35 @@ public class Define
        ProjectileTypeCount
     }
 
+    static public int GetWeaponIndex(string weaponName)
+    {
+        if (Enum.TryParse(typeof(Weapon), weaponName, true, out var resultInWeapon))
+        {
+            return (int)(Weapon)resultInWeapon;
+        }
+        else if (Enum.TryParse(typeof(Projectile), weaponName, true, out var resultInProjectile))
+        {
+            return (int)(Projectile)resultInProjectile + (int)Weapon.WeaponTypeCount;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    static public string GetWeaponName(int index)
+    {
+        if (index >= (int)Weapon.WeaponTypeCount)
+        {
+            index -= (int)Weapon.WeaponTypeCount;
+            return Enum.GetName(typeof(Projectile), index).ToString();
+        }
+        else
+        {
+            return Enum.GetName(typeof(Weapon), index).ToString();
+        }
+    }
+
     public enum Layer
     {
         Attackable = 10,
@@ -69,5 +100,15 @@ public class Define
             Speed = speed;
             Damage = damage;
         }
+    }
+
+    public struct WeaponData
+    {
+        public float Damage;
+        public float Duration;
+        public float AttackRange;
+        public float AttackCycle;
+        public float SpawnCycle;
+        public int SpawnNum;
     }
 }

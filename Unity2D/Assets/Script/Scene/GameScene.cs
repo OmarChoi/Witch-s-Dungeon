@@ -9,7 +9,6 @@ public class GameScene : MonoBehaviour
 {
     public GameObject playerCharacter;
     List<GameObject> monsters = new List<GameObject>();
-    GameObject[] weapons = new GameObject[(int)Define.Weapon.WeaponTypeCount];
     GameSceneUI sceneUI;
     double deltaTime = -1;
 
@@ -20,10 +19,6 @@ public class GameScene : MonoBehaviour
 
     public void Init()
     {
-        GameObject player = Resources.Load<GameObject>("Prefabs/Player");
-        playerCharacter = UnityEngine.Object.Instantiate(player);
-        Managers.Player = playerCharacter;
-
         GameObject go = Resources.Load<GameObject>("Prefabs/GameSceneUI");
         GameObject ui = UnityEngine.Object.Instantiate(go);
         sceneUI = ui.GetComponent<GameSceneUI>();
@@ -37,11 +32,7 @@ public class GameScene : MonoBehaviour
         for (int i = 0; i < (int)Define.Weapon.WeaponTypeCount; ++i)
         {
             string name = Enum.GetName(typeof(Define.Weapon), i);
-            GameObject weaponPrefab = Managers.Resource.GetResource<GameObject>(name);
-            GameObject weapon = UnityEngine.Object.Instantiate(weaponPrefab);
-            weapon.transform.SetParent(weaponFolder.transform);
-            weapon.SetActive(false);
-            weapons[i] = weapon;
+            Managers.Pool.CreatePool(name, 1, weaponFolder.transform);
         }
 
         for(int i = 0; i < (int)Define.Projectile.ProjectileTypeCount; ++i)
@@ -56,26 +47,11 @@ public class GameScene : MonoBehaviour
             Managers.Pool.CreatePool(name, 20, monsterFolder.transform);
         }
 
+        GameObject player = Resources.Load<GameObject>("Prefabs/Player");
+        playerCharacter = UnityEngine.Object.Instantiate(player);
+        Managers.Player = playerCharacter;
+
         StartCoroutine(StartTimer());
-        SpawnProjectile("Shuriken");
-    }
-
-    private void ActiveWeapon(int index)
-    {
-        if(index > weapons.Length)
-        {
-            Debug.LogError("Wrong Acess at [GameScene weapon]");
-            return;
-        }
-        weapons[index].SetActive(true);
-        weapons[index].GetComponent<WeaponBase>().Init();
-    }
-
-    private void SpawnProjectile(string projectileName)
-    {
-        Vector2 startPos = Managers.Player.transform.position;
-        GameObject projectile = Managers.Pool.GetObject(projectileName, startPos);
-        projectile.GetComponent<WeaponBase>().Init();
     }
 
     private void SpawnEnemy()

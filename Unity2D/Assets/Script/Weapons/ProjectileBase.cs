@@ -4,40 +4,42 @@ using UnityEngine.EventSystems;
 
 public class ProjectileBase : WeaponBase
 {
-    string projectileType;
-    bool hasTarget = false;
-    float speed = 1.0f;
-    float arrange = 3.0f;
-    Vector2 direction = Vector2.zero;
-    Vector2 startPos = Vector2.zero;
+    float speed = 10.0f;
+    protected int maxTarget = 5;
+    protected int hitTarget = 0;
+    protected Vector2 direction = Vector2.zero;
 
     public override void Init()
     {
-        base.Init();
-        projectileType = transform.name.Replace("(Clone)", "").Trim();
+        direction = Vector2.zero;
+        hitTarget = 0;
+        SetDirection();
     }
 
-    protected override void UpdatePosition()
+    public override void UpdateTransform()
     {
-        UpdateDirection();
         Vector2 currentPos = transform.position;
-        float displacement = (currentPos - startPos).magnitude;
-        if(displacement < arrange)
+        float displacement = (currentPos - weaponPos).magnitude;
+        if(displacement > AttackRange || direction.magnitude < float.Epsilon || hitTarget > maxTarget)
         {
-            transform.Translate(direction * speed * Time.fixedDeltaTime, Space.World);
+            Managers.Pool.ReleaseObject(weaponName, this.gameObject);
         }
         else
         {
-            Managers.Pool.ReleaseObject(projectileType, this.gameObject);
+            this.gameObject.transform.position = currentPos + direction * speed * Time.fixedDeltaTime;
         }
     }
 
-    protected virtual void UpdateDirection() { }
+    protected virtual void SetDirection() { }
 
-    protected virtual void SetDirection() { } 
+    protected virtual void CalculateDirection(Transform target) { }
 
-    private void Spawn(Vector2 startPosition)
+    public void Ricocheted(Collider2D hittedTarget)
     {
-        SetDirection();
+        hitTarget += 1;
+        weaponPos = transform.position;
+        GetTargetInCircleArea();
+        Transform target = GetNearestTarget();
+        CalculateDirection(target);
     }
 }
