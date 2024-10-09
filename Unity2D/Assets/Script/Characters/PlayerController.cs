@@ -18,6 +18,8 @@ public class PlayerController : ControllerBase
     {
         base.Init();
         Speed = 5;
+        HP = 100.0f;
+        MaxHp = 1000.0f;
 
         for (int i = 0; i < weaponInfo.Length; ++i)
         {
@@ -44,12 +46,15 @@ public class PlayerController : ControllerBase
             Managers.Data.GetWeaponData(weaponInfo[i].Name, weaponInfo[i].WeaponLevel, ref weaponData);
             float execTime = deltaTime - weaponInfo[i].LastSpawnTime;
             if (execTime < weaponData.SpawnCycle) continue;
-            GameObject weapon = Managers.Pool.GetObject(weaponInfo[i].Name, transform.position);
-            WeaponBase weaponController = weapon.GetComponent<WeaponBase>();
-            if (weaponController != null)
+            for (int j = 0; j < weaponData.SpawnNum; ++j)
             {
-                weaponController.SpawnWeapon(transform.position, weaponInfo[i].WeaponLevel);
-                weaponInfo[i].LastSpawnTime = deltaTime;
+                GameObject weapon = Managers.Pool.GetObject(weaponInfo[i].Name, transform.position);
+                WeaponBase weaponController = weapon.GetComponent<WeaponBase>();
+                if (weaponController != null)
+                {
+                    weaponController.SpawnWeapon(transform.position, weaponInfo[i].WeaponLevel);
+                    weaponInfo[i].LastSpawnTime = deltaTime;
+                }
             }
         }
     }
@@ -97,5 +102,23 @@ public class PlayerController : ControllerBase
                 animator.Play("Die");
                 break;
         }
+    }
+
+    public void AddExp(int exp)
+    {
+        currentExp += exp;
+        if (currentExp > Managers.Data.GetExpPerLevel(currentLevel))
+        {
+            currentExp = 0;
+            currentLevel += 1;
+            Debug.Log($"level : {currentLevel}");
+            // 무기 선택 UI 실행
+            // 무기 선택에 따른 처리 진행
+        }
+    }
+
+    protected override void Dead()
+    {
+        Debug.Log("Player is Dead");
     }
 }

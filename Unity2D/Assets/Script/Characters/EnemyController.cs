@@ -6,14 +6,13 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyController : ControllerBase
 {
-    int mid = -1;
     string enemyType = string.Empty;
     Rigidbody2D targetObject = null;
 
     public override void Init()
     {
         base.Init();
-        enemyType = transform.name.Replace("(Clone)", "").Trim();
+        enemyType = Utils.GetNameExceptClone(transform.name);
         Managers.Data.GetMonsterStatusByName(enemyType, out status);
     }
 
@@ -33,9 +32,8 @@ public class EnemyController : ControllerBase
         moveDirection = (targetPos - position).normalized;
     }
 
-    public void SpawnMonster(GameObject target, Vector2 pos, int id)
+    public void SpawnMonster(GameObject target, Vector2 pos)
     {
-        mid = id;
         targetObject = target.GetComponent<Rigidbody2D>();
         rigidBody.position = new Vector3(pos.x, pos.y, 0);
     }
@@ -48,6 +46,7 @@ public class EnemyController : ControllerBase
 
     protected override void Dead()
     {
+        Managers.Player.GetComponent<PlayerController>().AddExp(currentExp);
         Managers.Pool.ReleaseObject(enemyType, this.gameObject);
     }
 
@@ -59,5 +58,13 @@ public class EnemyController : ControllerBase
         GetDamage(damage);
         Collider2D collider = this.GetComponent<Collider2D>();
         weapon.Ricocheted(collider);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") != true) return;
+        // 공격 속도에 따라 공격
+        // LastAttackTime에 따른 공격 설정
+        collision.gameObject.GetComponent<ControllerBase>().GetDamage(Damage);
     }
 }

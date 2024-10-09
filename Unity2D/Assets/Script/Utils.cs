@@ -1,8 +1,7 @@
-using System.IO;
-using UnityEngine;
-using static UnityEngine.UI.Image;
-
 public class Utils
 {
-
+    public static string GetNameExceptClone(string name)
+    {
+        return name.Replace("(Clone)", "").Trim();
+    }
 }

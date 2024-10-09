@@ -7,6 +7,8 @@ TagManager:
   - Monster
   - Weapon
   - Projectile
+  - Area
+  - Ground
   layers:
   - Default
   - TransparentFX

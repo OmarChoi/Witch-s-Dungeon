@@ -21,7 +21,7 @@ public abstract class WeaponBase : MonoBehaviour
     protected virtual void Awake()
     {
         targetLayer = (1 << (int)Define.Layer.Attackable);
-        weaponName = transform.name.Replace("(Clone)", "").Trim();
+        weaponName = Utils.GetNameExceptClone(transform.name);
     }
 
     public void FixedUpdate()

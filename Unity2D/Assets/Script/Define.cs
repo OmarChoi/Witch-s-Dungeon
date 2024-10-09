@@ -6,7 +6,7 @@ public class Define
 {
     public const int TotalTime = 15;
     public const int SpawnCycle = 3;
-    public const int SpawnRange = 15;
+    public const int SpawnRange = 10;
     public const int MaxWeaponLevel = 5;
 
     public enum Direction : byte

@@ -51,21 +51,25 @@ public class GameScene : MonoBehaviour
         playerCharacter = UnityEngine.Object.Instantiate(player);
         Managers.Player = playerCharacter;
 
+        GameObject mapPrefab = Resources.Load<GameObject>("Prefabs/Map");
+        GameObject map = UnityEngine.Object.Instantiate(mapPrefab);
+        map.name = mapPrefab.name;
+
         StartCoroutine(StartTimer());
     }
 
     private void SpawnEnemy()
     {
         int minuate = (int)deltaTime / 60;
-        
+        if (minuate >= 15) return;
         for (int i = 0; i < (int)Define.Monster.MonsterTypeCount; ++i)
         {
             string name = Enum.GetName (typeof(Define.Monster), i);
             int nMonsters = Managers.Data.GetMonsterDataByTime(minuate, i);
             for (int j = 0; j < nMonsters; ++j)
             {
-                Vector3 randomPos = UnityEngine.Random.insideUnitCircle * SpawnRange;
-                randomPos = UnityEngine.Random.insideUnitCircle * SpawnRange + (Vector2)playerCharacter.transform.position + new Vector2(5.0f, 5.0f);
+                Vector2 randomPos = UnityEngine.Random.insideUnitCircle;
+                randomPos = (randomPos * SpawnRange) + (Vector2)playerCharacter.transform.position;
                 GameObject monster = Managers.Pool.GetObject(name, randomPos);
                 monsters.Add(monster);
                 EnemyController controller = monster.GetComponent<EnemyController>();
@@ -73,7 +77,7 @@ public class GameScene : MonoBehaviour
                 {
                     Debug.LogError($"{name} doesn't have controller");
                 }
-                controller.SpawnMonster(playerCharacter, randomPos, monsters.Count);
+                controller.SpawnMonster(playerCharacter, randomPos);
             }
         }
     }
@@ -90,6 +94,24 @@ public class GameScene : MonoBehaviour
             }
             yield return new WaitForSeconds(1);
         }
+        GameEnd();
         yield break;
+    }
+
+    private void Clear()
+    {
+        foreach (var monster in monsters)
+        {
+            string monsterName = Utils.GetNameExceptClone(monster.name);
+            Managers.Pool.ReleaseObject(monsterName, monster);
+        }
+        playerCharacter.SetActive(false);
+        sceneUI.gameObject.SetActive(false);
+        deltaTime = 0;
+    }
+
+    public void GameEnd()
+    {
+        Clear();
     }
 }

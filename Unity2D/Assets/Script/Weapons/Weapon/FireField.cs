@@ -6,6 +6,8 @@ public class FireField : AreaWeaponBase
 {
     public override void Init()
     {
+        float scale = AttackRange / 2.0f;
+        this.gameObject.transform.localScale = new Vector3(scale, scale, scale);
         base.Init();
     }
 

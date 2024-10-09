@@ -9,10 +9,14 @@ public class ControllerBase : MonoBehaviour
     protected Vector2 moveDirection = Vector2.zero;
     protected Define.Status status = new Define.Status();
 
+    protected int currentExp = 2;
+    protected int currentLevel = 0;
+
     public float HP { get { return status.CurrentHp; } protected set { status.CurrentHp = value; } }
     public float MaxHp { get { return status.MaxHp; } protected set { status.CurrentHp = value; } }
     public float Speed { get { return status.Speed; } protected set { status.Speed = value; } }
     public float Damage { get { return status.Damage; } protected set { status.Damage = value; } }
+    public Vector2 Direction { get { return moveDirection; } }
 
     public void Awake()
     {
@@ -58,7 +62,6 @@ public class ControllerBase : MonoBehaviour
     protected virtual void UpdateTransform()
     {
         Vector2 nextPos = rigidBody.position + moveDirection * Speed * Time.fixedDeltaTime;
-        // check Can Go
         rigidBody.MovePosition(nextPos);
         rigidBody.velocity = Vector2.zero;
     }

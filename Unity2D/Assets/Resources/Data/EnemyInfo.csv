@@ -1,8 +1,8 @@
 MonsterType,Hp,Speed,Damage
-Mouse,75,3,2
-Slime,200,1,8
-Skeleton,100,4,10
-Ghost,50,6,10
-Zombie,250,1,15
-Minotauros,400,2,20
-Jinn,1000,2,30
+Mouse,75,3,1
+Slime,200,1,4
+Skeleton,100,4,5
+Ghost,50,6,5
+Zombie,250,1,8
+Minotauros,400,2,10
+Jinn,1000,2,15

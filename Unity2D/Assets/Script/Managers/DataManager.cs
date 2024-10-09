@@ -156,5 +156,11 @@ public class DataManager
             Debug.LogError($"Get Weapon Data Error : Can't Read {weaponName} in Dictionary");
         }
     }
+
+    public int GetExpPerLevel(int level)
+    {
+        return 10;
+    }
+
     #endregion
 }
