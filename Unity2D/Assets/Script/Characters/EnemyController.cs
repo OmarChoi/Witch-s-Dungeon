@@ -14,6 +14,7 @@ public class EnemyController : ControllerBase
         base.Init();
         enemyType = Utils.GetNameExceptClone(transform.name);
         Managers.Data.GetMonsterStatusByName(enemyType, out status);
+        currentExp = status.Exp;
     }
 
     protected override void UpdateTransform()

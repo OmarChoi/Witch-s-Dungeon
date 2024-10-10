@@ -51,7 +51,8 @@ public class DataManager
                 enemyDictionary.Add(monsterName, new Define.Status(
                     data["Hp"],
                     data["Speed"],
-                    data["Damage"]
+                    data["Damage"],
+                    (int)data["Exp"]
                 ));
             }
         }
@@ -100,7 +101,7 @@ public class DataManager
         }
     }
 
-    private static Define.WeaponData ParseWeaponData(string[] values, ref Define.WeaponData weaponData)
+    private Define.WeaponData ParseWeaponData(string[] values, ref Define.WeaponData weaponData)
     {
         FieldInfo[] fields = typeof(Define.WeaponData).GetFields();
 
@@ -118,6 +119,7 @@ public class DataManager
         }
         return weaponData;
     }
+
     #endregion
 
     #region Get Data
@@ -157,10 +159,10 @@ public class DataManager
         }
     }
 
-    public int GetExpPerLevel(int level)
+    public int GetRequiredExpPerLevel(int level)
     {
-        return 10;
+        // Level에 따른 경험치 증가 수식
+        return (int)(MathF.Log10(level * level * 100) + level) * 8;
     }
-
     #endregion
 }

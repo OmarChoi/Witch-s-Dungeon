@@ -9,8 +9,8 @@ public class ControllerBase : MonoBehaviour
     protected Vector2 moveDirection = Vector2.zero;
     protected Define.Status status = new Define.Status();
 
-    protected int currentExp = 2;
-    protected int currentLevel = 0;
+    public int currentExp = 0;
+    public int currentLevel = 1;
 
     public float HP { get { return status.CurrentHp; } protected set { status.CurrentHp = value; } }
     public float MaxHp { get { return status.MaxHp; } protected set { status.CurrentHp = value; } }

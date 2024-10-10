@@ -10,7 +10,8 @@ public class GameScene : MonoBehaviour
     public GameObject playerCharacter;
     List<GameObject> monsters = new List<GameObject>();
     GameSceneUI sceneUI;
-    double deltaTime = -1;
+    WeaponUI weaponUI;
+    double deltaTime = 840;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class GameScene : MonoBehaviour
         GameObject go = Resources.Load<GameObject>("Prefabs/GameSceneUI");
         GameObject ui = UnityEngine.Object.Instantiate(go);
         sceneUI = ui.GetComponent<GameSceneUI>();
+        weaponUI = ui.GetComponent<WeaponUI>();
 
         GameObject monsterFolder = new GameObject { name = "Mosnters" };
         Managers.Resource.LoadResourcesInFolder<GameObject>("Prefabs/Monster");
@@ -56,6 +58,7 @@ public class GameScene : MonoBehaviour
         map.name = mapPrefab.name;
 
         StartCoroutine(StartTimer());
+        weaponUI.ChangeWeaponLevel(0, 4);
     }
 
     private void SpawnEnemy()

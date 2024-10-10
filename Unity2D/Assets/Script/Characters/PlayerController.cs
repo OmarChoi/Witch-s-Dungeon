@@ -28,7 +28,7 @@ public class PlayerController : ControllerBase
             weaponInfo[i].LastSpawnTime = -60.0f;
         }
         int idx = Define.GetWeaponIndex(baseWeapon);
-        weaponInfo[idx].WeaponLevel = 0;
+        weaponInfo[idx].WeaponLevel = 4;
     }
 
     public void Update()
@@ -107,11 +107,11 @@ public class PlayerController : ControllerBase
     public void AddExp(int exp)
     {
         currentExp += exp;
-        if (currentExp > Managers.Data.GetExpPerLevel(currentLevel))
+        int requiredExp = Managers.Data.GetRequiredExpPerLevel(currentLevel);
+        if (currentExp > requiredExp)
         {
-            currentExp = 0;
+            currentExp -= requiredExp;
             currentLevel += 1;
-            Debug.Log($"level : {currentLevel}");
             // 무기 선택 UI 실행
             // 무기 선택에 따른 처리 진행
         }
