@@ -90,14 +90,16 @@ public class Define
     {
         public float MaxHp;
         public float CurrentHp;
+        public float AttackSpeed;
         public float Speed;
         public float Damage;
         public int Exp;
 
-        public Status(float hp = 0.0f, float speed = 0.0f, float damage = 0.0f, int exp = 0)
+        public Status(float hp = 0.0f, float attackspeed = 0.0f, float speed = 0.0f, float damage = 0.0f, int exp = 0)
         {
             MaxHp = hp;
             CurrentHp = hp;
+            AttackSpeed = attackspeed;
             Speed = speed;
             Damage = damage;
             Exp = exp;
@@ -112,5 +114,12 @@ public class Define
         public float AttackCycle;
         public float SpawnCycle;
         public int SpawnNum;
+    }
+
+    public struct WeaponInfo
+    {
+        public string Name;
+        public int WeaponLevel;
+        public float LastSpawnTime;
     }
 }

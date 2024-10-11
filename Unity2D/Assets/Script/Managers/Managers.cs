@@ -13,6 +13,7 @@ public class Managers : MonoBehaviour
     UIManager uiManager = new UIManager();
 
     static GameObject playerCharacter = null;
+    static GameScene gameScene = null;
 
     public static ResourceManager Resource { get { return Manager.resourceManager; } }
     public static PoolManager Pool { get { return Manager.poolManager; } }
@@ -29,6 +30,8 @@ public class Managers : MonoBehaviour
         }
     }
 
+    public static GameScene Scene { get { return gameScene; } }
+
     private void Start()
     {
         Init();
@@ -44,6 +47,7 @@ public class Managers : MonoBehaviour
                 obj = new GameObject { name = "ManagerSet" };
                 obj.AddComponent<Managers>();
             }
+            gameScene = GameObject.Find("GameScene").GetComponent<GameScene>();
             s_Manager = obj.GetComponent<Managers>();
             Pool.Init();
             Resource.Init();

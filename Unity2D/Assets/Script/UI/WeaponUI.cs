@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 public class WeaponUI : MonoBehaviour
 {
-    [SerializeField]
-    Text[] weaponTexts = null;
+    [SerializeField] Text[] weaponTexts = null;
 
     private void Awake()
     {

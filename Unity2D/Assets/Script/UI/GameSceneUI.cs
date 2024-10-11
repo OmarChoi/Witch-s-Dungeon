@@ -3,20 +3,10 @@ using UnityEngine.UI;
 
 public class GameSceneUI : MonoBehaviour
 {
-    [SerializeField]
-    Text timerText;
-    [SerializeField]
-    Slider expBar;
-    [SerializeField]
-    Text levelText;
-
-    private void Awake()
-    {
-        if (timerText == null)
-            timerText = GetComponent<Text>();
-        if (expBar == null)
-            expBar = GetComponent<Slider>();
-    }
+    [SerializeField] Text timerText;
+    [SerializeField] Slider expBar;
+    [SerializeField] Slider hpBar;
+    [SerializeField] Text levelText;
 
     public void UpdateTimer(double time)
     {
@@ -36,6 +26,7 @@ public class GameSceneUI : MonoBehaviour
         int currentLevel = Managers.Player.GetComponent<ControllerBase>().currentLevel;
         int totalExp = Managers.Data.GetRequiredExpPerLevel(currentLevel);
         expBar.value = (float)currentExp / totalExp;
+        hpBar.value = (float)Managers.Player.GetComponent<ControllerBase>().HP / Managers.Player.GetComponent<ControllerBase>().MaxHp;
         levelText.text = $"{currentLevel.ToString("D2")}";
     }
 }

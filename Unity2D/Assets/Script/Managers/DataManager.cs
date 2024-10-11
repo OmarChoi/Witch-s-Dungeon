@@ -8,7 +8,7 @@ public class DataManager
     Dictionary<string, Define.Status> enemyDictionary = new Dictionary<string, Define.Status>(); 
     Dictionary<string, Define.WeaponData[]> weaponDictionary = new Dictionary<string, Define.WeaponData[]>(Define.MaxWeaponLevel);
     int[,] monsterAtMinuate = new int[Define.TotalTime, (int)Define.Monster.MonsterTypeCount];
-
+    Define.Status playerStatus = new Define.Status(100.0f, 1.0f, 5.0f, 1.0f, 0);
     public void Init()
     {
         LoadEnemyData();
@@ -45,11 +45,12 @@ public class DataManager
                 string monsterName = values[0].Trim();
                 for (int j = 1; j < headers.Length; ++j)
                 {
-                    data[headers[j].Trim()] = int.Parse(values[j].Trim());
+                    data[headers[j].Trim()] = float.Parse(values[j].Trim());
                 }
 
                 enemyDictionary.Add(monsterName, new Define.Status(
                     data["Hp"],
+                    data["AttackSpeed"],
                     data["Speed"],
                     data["Damage"],
                     (int)data["Exp"]
@@ -134,6 +135,11 @@ public class DataManager
             Debug.LogError($"{monsterName} doesn't exist");
             status = null;
         }
+    }
+
+    public void GetPlayerStatus(out Define.Status status)
+    {
+        status = playerStatus;
     }
 
     public int GetMonsterDataByTime(int time, int monsterType)

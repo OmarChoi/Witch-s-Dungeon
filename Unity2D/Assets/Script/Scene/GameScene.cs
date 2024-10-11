@@ -7,11 +7,13 @@ using static Define;
 
 public class GameScene : MonoBehaviour
 {
-    public GameObject playerCharacter;
+    GameObject playerCharacter;
     List<GameObject> monsters = new List<GameObject>();
     GameSceneUI sceneUI;
     WeaponUI weaponUI;
-    double deltaTime = 840;
+    GameObject levelUpUIObject;
+
+    double deltaTime = 0;
 
     private void Awake()
     {
@@ -20,10 +22,14 @@ public class GameScene : MonoBehaviour
 
     public void Init()
     {
-        GameObject go = Resources.Load<GameObject>("Prefabs/GameSceneUI");
-        GameObject ui = UnityEngine.Object.Instantiate(go);
-        sceneUI = ui.GetComponent<GameSceneUI>();
-        weaponUI = ui.GetComponent<WeaponUI>();
+        GameObject gameSceneUIPrefab = Resources.Load<GameObject>("Prefabs/UI/GameSceneUI");
+        GameObject gameSceneUIObj = UnityEngine.Object.Instantiate(gameSceneUIPrefab);
+        sceneUI = gameSceneUIObj.GetComponent<GameSceneUI>();
+        weaponUI = gameSceneUIObj.GetComponent<WeaponUI>();
+
+        GameObject levelUpUIPrefab = Resources.Load<GameObject>("Prefabs/UI/LevelUpUI");
+        levelUpUIObject = UnityEngine.Object.Instantiate(levelUpUIPrefab);
+        levelUpUIObject.SetActive(false);
 
         GameObject monsterFolder = new GameObject { name = "Mosnters" };
         Managers.Resource.LoadResourcesInFolder<GameObject>("Prefabs/Monster");
@@ -58,7 +64,11 @@ public class GameScene : MonoBehaviour
         map.name = mapPrefab.name;
 
         StartCoroutine(StartTimer());
-        weaponUI.ChangeWeaponLevel(0, 4);
+    }
+
+    public void ChangeWeaponLevel(int idx, int level)
+    {
+        weaponUI.ChangeWeaponLevel(idx, level);
     }
 
     private void SpawnEnemy()
@@ -101,8 +111,16 @@ public class GameScene : MonoBehaviour
         yield break;
     }
 
+    public void SpawnLevelUpUI()
+    {
+        Time.timeScale = 0;
+        levelUpUIObject.SetActive(true);
+        levelUpUIObject.GetComponent<LevelUpUI>().SpawnLevelUpUI();
+    }
+
     private void Clear()
     {
+        StopAllCoroutines();
         foreach (var monster in monsters)
         {
             string monsterName = Utils.GetNameExceptClone(monster.name);

@@ -1,26 +1,19 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : ControllerBase
 {
-    struct WeaponInfo
-    {
-        public string Name;
-        public int WeaponLevel;
-        public float LastSpawnTime;
-    }
+    private Define.WeaponInfo[] weaponInfo = new Define.WeaponInfo[(int)Define.Weapon.WeaponTypeCount + (int)Define.Projectile.ProjectileTypeCount];
     private float deltaTime = 0.0f;
     protected Define.State state = Define.State.Idle;
-    private WeaponInfo[] weaponInfo = new WeaponInfo[(int)Define.Weapon.WeaponTypeCount + (int)Define.Projectile.ProjectileTypeCount];
+
     string baseWeapon = "Shuriken";
 
     public override void Init()
     {
         base.Init();
-        Speed = 5;
-        HP = 100.0f;
-        MaxHp = 1000.0f;
-
+        Managers.Data.GetPlayerStatus(out this.status);
         for (int i = 0; i < weaponInfo.Length; ++i)
         {
             weaponInfo[i].Name = Define.GetWeaponName(i);
@@ -28,7 +21,8 @@ public class PlayerController : ControllerBase
             weaponInfo[i].LastSpawnTime = -60.0f;
         }
         int idx = Define.GetWeaponIndex(baseWeapon);
-        weaponInfo[idx].WeaponLevel = 4;
+        weaponInfo[idx].WeaponLevel = 0;
+        Managers.Scene.ChangeWeaponLevel(idx, 0);
     }
 
     public void Update()
@@ -66,6 +60,7 @@ public class PlayerController : ControllerBase
 
     protected override void UpdateTransform()
     {
+        if (state == Define.State.Die) return;
         deltaTime += Time.fixedDeltaTime;
         UpdateAnimation();
         base.UpdateTransform();
@@ -73,7 +68,8 @@ public class PlayerController : ControllerBase
 
     private void OnMove(InputValue value)
     {
-        moveDirection = value.Get<Vector2>();
+        if (state == Define.State.Die) return;
+            moveDirection = value.Get<Vector2>();
     }
 
     void GetKeyBoardInput()
@@ -112,13 +108,27 @@ public class PlayerController : ControllerBase
         {
             currentExp -= requiredExp;
             currentLevel += 1;
-            // 무기 선택 UI 실행
-            // 무기 선택에 따른 처리 진행
+            Managers.Scene.SpawnLevelUpUI();
         }
     }
 
+    public void SetWeaponLevel(int idx, int level)
+    {
+        weaponInfo[idx].WeaponLevel = level - 1;
+    }
+
+    public int GetWeaponLevel(int idx)
+    {
+        if(idx < 0 || idx >= weaponInfo.Length)
+        {
+            Debug.LogError("Index Error PlayerController.cs GetWeaponInfo()");
+        }
+        return weaponInfo[idx].WeaponLevel;
+    }
+
+
     protected override void Dead()
     {
-        Debug.Log("Player is Dead");
+        Managers.Scene.GameEnd();
     }
 }

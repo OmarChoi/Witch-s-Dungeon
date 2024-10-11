@@ -22,7 +22,6 @@ public class PoolObject
     {
         GameObject newObject = Managers.Resource.Instantiate(m_objName, m_parent);
         newObject.SetActive(isActiveByDefault);
-        newObject.name = m_objName;
         m_objects.Push(newObject);
         return newObject;
     }

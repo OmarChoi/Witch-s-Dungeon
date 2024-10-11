@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -61,11 +62,21 @@ public class EnemyController : ControllerBase
         weapon.Ricocheted(collider);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") != true) return;
-        // 공격 속도에 따라 공격
-        // LastAttackTime에 따른 공격 설정
-        collision.gameObject.GetComponent<ControllerBase>().GetDamage(Damage);
+        StartCoroutine(AttackPlayer());
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") != true) return;
+        StopCoroutine(AttackPlayer());
+    }
+
+    private IEnumerator AttackPlayer()
+    {
+        Managers.Player.GetComponent<ControllerBase>().GetDamage(Damage);
+        yield return new WaitForSeconds(1 / status.AttackSpeed);
     }
 }
