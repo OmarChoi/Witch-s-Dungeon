@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using static Define;
 
@@ -10,10 +9,11 @@ public class GameScene : MonoBehaviour
     GameObject playerCharacter;
     List<GameObject> monsters = new List<GameObject>();
     GameSceneUI sceneUI;
+    GameOverUI endingUI;
     WeaponUI weaponUI;
-    GameObject levelUpUIObject;
+    LevelUpUI levelUpUI;
 
-    double deltaTime = 0;
+    double deltaTime = 840;
 
     private void Awake()
     {
@@ -22,14 +22,28 @@ public class GameScene : MonoBehaviour
 
     public void Init()
     {
-        GameObject gameSceneUIPrefab = Resources.Load<GameObject>("Prefabs/UI/GameSceneUI");
-        GameObject gameSceneUIObj = UnityEngine.Object.Instantiate(gameSceneUIPrefab);
-        sceneUI = gameSceneUIObj.GetComponent<GameSceneUI>();
-        weaponUI = gameSceneUIObj.GetComponent<WeaponUI>();
+        GameObject[] uiPrefabs = Resources.LoadAll<GameObject>("Prefabs/UI");
+        foreach (GameObject prefab in uiPrefabs)
+        {
+            string uiName = prefab.name;
+            GameObject uiObject = UnityEngine.Object.Instantiate(prefab);
+            switch (uiName)
+            {
+                case "GameOverUI":
+                    uiObject.SetActive(false);
+                    endingUI = uiObject.GetComponent<GameOverUI>();
+                    break;
+                case "GameSceneUI":
+                    sceneUI = uiObject.GetComponent<GameSceneUI>();
+                    weaponUI = uiObject.GetComponent<WeaponUI>();
+                    break;
+                case "LevelUpUI":
+                    uiObject.SetActive(false);
+                    levelUpUI = uiObject.GetComponent<LevelUpUI>();
+                    break;
 
-        GameObject levelUpUIPrefab = Resources.Load<GameObject>("Prefabs/UI/LevelUpUI");
-        levelUpUIObject = UnityEngine.Object.Instantiate(levelUpUIPrefab);
-        levelUpUIObject.SetActive(false);
+            }
+        }
 
         GameObject monsterFolder = new GameObject { name = "Mosnters" };
         Managers.Resource.LoadResourcesInFolder<GameObject>("Prefabs/Monster");
@@ -68,7 +82,8 @@ public class GameScene : MonoBehaviour
 
     public void ChangeWeaponLevel(int idx, int level)
     {
-        weaponUI.ChangeWeaponLevel(idx, level);
+        int settingLevel = Mathf.Clamp(level, 0, Define.MaxWeaponLevel - 1);
+        weaponUI.ChangeWeaponLevel(idx, settingLevel);
     }
 
     private void SpawnEnemy()
@@ -82,7 +97,8 @@ public class GameScene : MonoBehaviour
             for (int j = 0; j < nMonsters; ++j)
             {
                 Vector2 randomPos = UnityEngine.Random.insideUnitCircle;
-                randomPos = (randomPos * SpawnRange) + (Vector2)playerCharacter.transform.position;
+                int randomRange = UnityEngine.Random.Range(10, Define.SpawnRange);
+                randomPos = (randomPos * randomRange) + (Vector2)playerCharacter.transform.position;
                 GameObject monster = Managers.Pool.GetObject(name, randomPos);
                 monsters.Add(monster);
                 EnemyController controller = monster.GetComponent<EnemyController>();
@@ -114,8 +130,7 @@ public class GameScene : MonoBehaviour
     public void SpawnLevelUpUI()
     {
         Time.timeScale = 0;
-        levelUpUIObject.SetActive(true);
-        levelUpUIObject.GetComponent<LevelUpUI>().SpawnLevelUpUI();
+        levelUpUI.SpawnLevelUpUI();
     }
 
     private void Clear()
@@ -133,6 +148,7 @@ public class GameScene : MonoBehaviour
 
     public void GameEnd()
     {
+        endingUI.Init();
         Clear();
     }
 }

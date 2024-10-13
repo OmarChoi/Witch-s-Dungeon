@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,19 +11,26 @@ public class WeaponOptionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
     [SerializeField] Text weaponDescripter;
     [SerializeField] GameObject LevelUpUI;
 
-    private Sprite[] weaponIcons;
     private int weaponIndex;
     private int nextLevel = 0;
 
-    public void SetUI(string name, int level)
+    public void SetUI(string name, int nextlv)
     {
+        this.gameObject.SetActive(true);
         weaponIndex = Define.GetWeaponIndex(name);
-        Sprite icon = Managers.Resource.GetResource<Sprite>(name + "Icon");
-        weaponImage.sprite = icon;
+        weaponImage.sprite = Managers.Resource.GetResource<Sprite>(name + "Icon");
         weaponName.text = name;
-        nextLevel = level + 1;
-        currentLevel.text = $"Level {nextLevel}";
-        weaponDescripter.text = "";
+        nextLevel = nextlv;
+        currentLevel.text = $"Level {nextlv + 1}";
+        bool IsFirst = (nextLevel == 1) ? true : false;
+        string descriptor = Managers.Data.GetWeaponDescriptor(name, IsFirst); ;
+        descriptor = descriptor.Replace("/", "\n").Trim();
+        weaponDescripter.text = descriptor;
+    }
+
+    public void SetUIOff()
+    {
+        this.gameObject.SetActive(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)

@@ -1,14 +1,12 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : ControllerBase
 {
     private Define.WeaponInfo[] weaponInfo = new Define.WeaponInfo[(int)Define.Weapon.WeaponTypeCount + (int)Define.Projectile.ProjectileTypeCount];
-    private float deltaTime = 0.0f;
     protected Define.State state = Define.State.Idle;
 
-    string baseWeapon = "Shuriken";
+    string baseWeapon = "FireField";
 
     public override void Init()
     {
@@ -21,8 +19,8 @@ public class PlayerController : ControllerBase
             weaponInfo[i].LastSpawnTime = -60.0f;
         }
         int idx = Define.GetWeaponIndex(baseWeapon);
-        weaponInfo[idx].WeaponLevel = 0;
-        Managers.Scene.ChangeWeaponLevel(idx, 0);
+        weaponInfo[idx].WeaponLevel = 4;
+        Managers.Scene.ChangeWeaponLevel(idx, weaponInfo[idx].WeaponLevel);
     }
 
     public void Update()
@@ -38,7 +36,7 @@ public class PlayerController : ControllerBase
             if (weaponInfo[i].WeaponLevel < 0) continue;
             Define.WeaponData weaponData = new Define.WeaponData();
             Managers.Data.GetWeaponData(weaponInfo[i].Name, weaponInfo[i].WeaponLevel, ref weaponData);
-            float execTime = deltaTime - weaponInfo[i].LastSpawnTime;
+            float execTime = ProgressTime - weaponInfo[i].LastSpawnTime;
             if (execTime < weaponData.SpawnCycle) continue;
             for (int j = 0; j < weaponData.SpawnNum; ++j)
             {
@@ -47,7 +45,7 @@ public class PlayerController : ControllerBase
                 if (weaponController != null)
                 {
                     weaponController.SpawnWeapon(transform.position, weaponInfo[i].WeaponLevel);
-                    weaponInfo[i].LastSpawnTime = deltaTime;
+                    weaponInfo[i].LastSpawnTime = ProgressTime;
                 }
             }
         }
@@ -61,7 +59,6 @@ public class PlayerController : ControllerBase
     protected override void UpdateTransform()
     {
         if (state == Define.State.Die) return;
-        deltaTime += Time.fixedDeltaTime;
         UpdateAnimation();
         base.UpdateTransform();
     }
@@ -114,7 +111,8 @@ public class PlayerController : ControllerBase
 
     public void SetWeaponLevel(int idx, int level)
     {
-        weaponInfo[idx].WeaponLevel = level - 1;
+        int settingLevel = Mathf.Clamp(level, 0, Define.MaxWeaponLevel - 1);
+        weaponInfo[idx].WeaponLevel = settingLevel;
     }
 
     public int GetWeaponLevel(int idx)
@@ -125,7 +123,6 @@ public class PlayerController : ControllerBase
         }
         return weaponInfo[idx].WeaponLevel;
     }
-
 
     protected override void Dead()
     {

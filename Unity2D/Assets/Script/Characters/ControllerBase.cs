@@ -9,6 +9,7 @@ public class ControllerBase : MonoBehaviour
     protected Vector2 moveDirection = Vector2.zero;
     protected Define.Status status = new Define.Status();
 
+    private float deltaTime = 0.0f;
     public int currentExp = 0;
     public int currentLevel = 1;
 
@@ -16,7 +17,9 @@ public class ControllerBase : MonoBehaviour
     public float MaxHp { get { return status.MaxHp; } protected set { status.CurrentHp = value; } }
     public float Speed { get { return status.Speed; } protected set { status.Speed = value; } }
     public float Damage { get { return status.Damage; } protected set { status.Damage = value; } }
+    public float AttackSpeed { get { return status.AttackSpeed; } protected set { status.AttackSpeed = value; } }
     public Vector2 Direction { get { return moveDirection; } }
+    protected float ProgressTime { get { return deltaTime; } }
 
     public void Awake()
     {
@@ -56,6 +59,7 @@ public class ControllerBase : MonoBehaviour
 
     private void FixedUpdate()
     {
+        deltaTime += Time.fixedDeltaTime;
         UpdateTransform();
     }
 
@@ -69,7 +73,7 @@ public class ControllerBase : MonoBehaviour
     public void GetDamage(float damage)
     {
         HP -= damage;
-        if (HP < 0)
+        if (HP < float.Epsilon)
         {
             Dead();
         }

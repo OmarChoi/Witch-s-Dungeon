@@ -1,14 +1,12 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyController : ControllerBase
 {
     string enemyType = string.Empty;
     Rigidbody2D targetObject = null;
+    private float lastAttackTime = 0;
+    private float attackRange = 0.8f;
 
     public override void Init()
     {
@@ -44,10 +42,24 @@ public class EnemyController : ControllerBase
     {
         UpdateTargetDirection();
         base.UpdateTransform();
+
+        float execTime = ProgressTime - lastAttackTime;
+        if (execTime > 1 / status.AttackSpeed)
+        {
+            Vector2 myPos = rigidBody.transform.position;
+            Vector2 targetPos = Managers.Player.transform.position;
+            float dist = (myPos - targetPos).magnitude;
+            if (dist < attackRange)
+            {
+                Attack();
+                lastAttackTime = ProgressTime;
+            }
+        }
     }
 
     protected override void Dead()
     {
+        StopAllCoroutines();
         Managers.Player.GetComponent<PlayerController>().AddExp(currentExp);
         Managers.Pool.ReleaseObject(enemyType, this.gameObject);
     }
@@ -55,28 +67,16 @@ public class EnemyController : ControllerBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Projectile") != true) return;
-        ProjectileBase weapon = collision.GetComponent<ProjectileBase>();
+        RicochetWeapon weapon = collision.GetComponent<RicochetWeapon>();
+        if (weapon == null) return;
         float damage = weapon.Damage;
         GetDamage(damage);
         Collider2D collider = this.GetComponent<Collider2D>();
         weapon.Ricocheted(collider);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") != true) return;
-        StartCoroutine(AttackPlayer());
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") != true) return;
-        StopCoroutine(AttackPlayer());
-    }
-
-    private IEnumerator AttackPlayer()
+    private void Attack()
     {
         Managers.Player.GetComponent<ControllerBase>().GetDamage(Damage);
-        yield return new WaitForSeconds(1 / status.AttackSpeed);
     }
 }

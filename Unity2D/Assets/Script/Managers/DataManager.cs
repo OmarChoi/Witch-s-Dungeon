@@ -7,12 +7,14 @@ public class DataManager
 {
     Dictionary<string, Define.Status> enemyDictionary = new Dictionary<string, Define.Status>(); 
     Dictionary<string, Define.WeaponData[]> weaponDictionary = new Dictionary<string, Define.WeaponData[]>(Define.MaxWeaponLevel);
+    Dictionary<string, string[]> weaponDescriptor = new Dictionary<string, string[]>();
     int[,] monsterAtMinuate = new int[Define.TotalTime, (int)Define.Monster.MonsterTypeCount];
     Define.Status playerStatus = new Define.Status(100.0f, 1.0f, 5.0f, 1.0f, 0);
     public void Init()
     {
         LoadEnemyData();
         LoadMonstersAtTime();
+        LoadWeaponDescriptor();
         LoadWeaponDataPerLevel();
     }
 
@@ -84,7 +86,6 @@ public class DataManager
         TextAsset[] csvFiles = Resources.LoadAll<TextAsset>("Data/Weapons");
         foreach (TextAsset csvFile in csvFiles)
         {
-            
             string[] lines = csvFile.text.Split('\n');
             string weaponName = csvFile.name.Replace("Data", "").Trim();
             Define.WeaponData[] weaponData = new Define.WeaponData[Define.MaxWeaponLevel];
@@ -121,6 +122,25 @@ public class DataManager
         return weaponData;
     }
 
+    private void LoadWeaponDescriptor()
+    {
+        TextAsset csvFile = LoadFile("WeaponDescriptor");
+        string[] lines = csvFile.text.Split('\n');
+
+        if (lines.Length > 0)
+        {
+            for (int i = 1; i < lines.Length; ++i)
+            {
+                if (string.IsNullOrWhiteSpace(lines[i])) continue;
+                string[] values = lines[i].Split(',');
+                string weaponName = values[0];
+                string weaponExplain = values[1];
+                string weaponIncrease = values[2];
+                string[] value = new string[] { weaponExplain, weaponIncrease };
+                weaponDescriptor.Add(weaponName, value);
+            }
+        }
+    }
     #endregion
 
     #region Get Data
@@ -169,6 +189,19 @@ public class DataManager
     {
         // Level에 따른 경험치 증가 수식
         return (int)(MathF.Log10(level * level * 100) + level) * 8;
+    }
+
+    public string GetWeaponDescriptor(string weaponName, bool IsFirstSelect)
+    {
+        if (!weaponDescriptor.ContainsKey(weaponName))
+        {
+            Debug.LogError($"{weaponName} Doesn't Exist in WeaponDescriptor ");
+            return null;
+        }
+        if (IsFirstSelect)
+            return weaponDescriptor[weaponName][0];
+        else
+            return weaponDescriptor[weaponName][1];
     }
     #endregion
 }

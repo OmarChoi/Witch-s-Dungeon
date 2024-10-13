@@ -29,8 +29,8 @@ public class AreaWeaponBase : WeaponBase
         while (timeLeft >= 0.0f)
         {
             ApplyDamage();
-            yield return new WaitForSeconds(AttackCycle);
-            timeLeft -= AttackCycle;
+            yield return new WaitForSeconds(1 / AttackCycle);
+            timeLeft -= (1 / AttackCycle);
         }
         Managers.Pool.ReleaseObject(weaponName, this.gameObject);
         yield break;

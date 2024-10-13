@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Shuriken : ProjectileBase
+public class Shuriken : RicochetWeapon
 {
     public override void Init()
     {

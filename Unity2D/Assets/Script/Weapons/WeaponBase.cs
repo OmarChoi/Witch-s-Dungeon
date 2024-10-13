@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
@@ -13,10 +11,10 @@ public abstract class WeaponBase : MonoBehaviour
     protected Collider2D[] monstersInRange;
     int currentLevel = -1;
 
-    public float Damage { get { return weaponData.Damage; } }
+    public float Damage { get { return weaponData.Damage * Managers.Player.GetComponent<ControllerBase>().Damage; } }
     public float Duration { get {  return weaponData.Duration; } }
     public float AttackRange { get {  return weaponData.AttackRange; } }
-    public float AttackCycle { get { return weaponData.AttackCycle; } }
+    public float AttackCycle { get { return weaponData.AttackCycle * Managers.Player.GetComponent<ControllerBase>().AttackSpeed; } }
 
     protected virtual void Awake()
     {
@@ -38,7 +36,7 @@ public abstract class WeaponBase : MonoBehaviour
         monstersInRange = Physics2D.OverlapCircleAll(weaponPos, AttackRange, targetLayer, 0.0f, 0.0f);
     }
 
-    protected Transform GetNearestTarget()
+    protected virtual Transform GetNearestTarget()
     {
         Transform targetObject = null;
         float minDist = AttackRange;
