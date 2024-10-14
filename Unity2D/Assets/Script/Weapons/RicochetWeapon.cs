@@ -13,12 +13,17 @@ public class RicochetWeapon : ProjectileBase
         hitTarget = 0;
     }
 
+    public override void PlayAudio()
+    {
+
+    }
+
     public void Ricocheted(Collider2D hittedTarget)
     {
         hitTarget += 1;
         if(hitTarget >= maxTarget)
         {
-            Managers.Pool.ReleaseObject(weaponName, this.gameObject);
+            Clear();
             return;
         }
         alreadyHitTarget[hitTarget] = hittedTarget.transform;
@@ -47,5 +52,14 @@ public class RicochetWeapon : ProjectileBase
             }
         }
         return targetObject;
+    }
+
+    protected void Clear()
+    {
+        for (int i = 0; i < alreadyHitTarget.Length; i++)
+        {
+            alreadyHitTarget[i] = null;
+        }
+        Managers.Pool.ReleaseObject(weaponName, this.gameObject);
     }
 }

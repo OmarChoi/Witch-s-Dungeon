@@ -7,4 +7,9 @@ public class Cutter : AreaWeaponBase
     {
         base.Init();
     }
+
+    public override void PlayAudio()
+    {
+
+    }
 }

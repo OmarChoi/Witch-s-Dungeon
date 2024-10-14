@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public abstract class WeaponBase : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public abstract class WeaponBase : MonoBehaviour
     protected Collider2D[] monstersInRange;
     int currentLevel = -1;
 
+    AudioResource soundEffect = null;
+
     public float Damage { get { return weaponData.Damage * Managers.Player.GetComponent<ControllerBase>().Damage; } }
     public float Duration { get {  return weaponData.Duration; } }
     public float AttackRange { get {  return weaponData.AttackRange; } }
@@ -20,6 +23,7 @@ public abstract class WeaponBase : MonoBehaviour
     {
         targetLayer = (1 << (int)Define.Layer.Attackable);
         weaponName = Utils.GetNameExceptClone(transform.name);
+        soundEffect = GetComponent<AudioResource>();
     }
 
     public void FixedUpdate()
@@ -28,6 +32,8 @@ public abstract class WeaponBase : MonoBehaviour
     }
 
     public virtual void Init() { }
+
+    public virtual void PlayAudio() { }
 
     public abstract void UpdateTransform();
 

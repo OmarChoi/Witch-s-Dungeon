@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class LobbyUI : MonoBehaviour
 {
     FadeUI fadeOut;
+    [SerializeField] GameObject optionUI;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class LobbyUI : MonoBehaviour
                 Invoke("LoadGameScene", fadeDuration);
                 break;
             case "Option":
+                optionUI.SetActive(true);
                 break;
             case "Quit":
                 Application.Quit();

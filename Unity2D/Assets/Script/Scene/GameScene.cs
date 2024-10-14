@@ -12,11 +12,14 @@ public class GameScene : MonoBehaviour
     GameOverUI endingUI;
     WeaponUI weaponUI;
     LevelUpUI levelUpUI;
+    OptionUI optionUI;
+    SoundControlUI soundControlUI;
 
-    double deltaTime = 840;
+    double deltaTime = 0;
 
     private void Awake()
     {
+        Managers.Scene = this;
         Init();
     }
 
@@ -41,7 +44,14 @@ public class GameScene : MonoBehaviour
                     uiObject.SetActive(false);
                     levelUpUI = uiObject.GetComponent<LevelUpUI>();
                     break;
-
+                case "Option":
+                    uiObject.SetActive(false);
+                    optionUI = uiObject.GetComponent<OptionUI>();
+                    break;
+                case "SoundController":
+                    uiObject.SetActive(false);
+                    soundControlUI = uiObject.GetComponent<SoundControlUI>();
+                    break;
             }
         }
 
@@ -54,19 +64,19 @@ public class GameScene : MonoBehaviour
         for (int i = 0; i < (int)Define.Weapon.WeaponTypeCount; ++i)
         {
             string name = Enum.GetName(typeof(Define.Weapon), i);
-            Managers.Pool.CreatePool(name, 1, weaponFolder.transform);
+            Managers.Pool.CreatePool(name, 1);
         }
 
         for(int i = 0; i < (int)Define.Projectile.ProjectileTypeCount; ++i)
         {
             string name = Enum.GetName(typeof(Define.Projectile), i);
-            Managers.Pool.CreatePool(name, 20, weaponFolder.transform);
+            Managers.Pool.CreatePool(name, 20);
         }
 
         for (int i = 0 ; i < (int)Define.Monster.MonsterTypeCount;++i)
         {
             string name = Enum.GetName(typeof(Define.Monster), i);
-            Managers.Pool.CreatePool(name, 20, monsterFolder.transform);
+            Managers.Pool.CreatePool(name, 20);
         }
 
         GameObject player = Resources.Load<GameObject>("Prefabs/Player");
@@ -77,6 +87,8 @@ public class GameScene : MonoBehaviour
         GameObject map = UnityEngine.Object.Instantiate(mapPrefab);
         map.name = mapPrefab.name;
 
+        FadeUI fadeUI = GameObject.Find("FadeUI").GetComponent<FadeUI>();
+        fadeUI.FadeOut(2.0f);
         StartCoroutine(StartTimer());
     }
 
@@ -141,7 +153,6 @@ public class GameScene : MonoBehaviour
             string monsterName = Utils.GetNameExceptClone(monster.name);
             Managers.Pool.ReleaseObject(monsterName, monster);
         }
-        playerCharacter.SetActive(false);
         sceneUI.gameObject.SetActive(false);
         deltaTime = 0;
     }

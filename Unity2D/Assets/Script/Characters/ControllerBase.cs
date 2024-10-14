@@ -8,6 +8,7 @@ public class ControllerBase : MonoBehaviour
 
     protected Vector2 moveDirection = Vector2.zero;
     protected Define.Status status = new Define.Status();
+    protected Define.State state = Define.State.Idle;
 
     private float deltaTime = 0.0f;
     public int currentExp = 0;
@@ -55,10 +56,13 @@ public class ControllerBase : MonoBehaviour
     {
         HP = MaxHp;
         moveDirection = Vector2.zero;
+        state = Define.State.Idle;
     }
 
     private void FixedUpdate()
     {
+        if (state == Define.State.Die)
+            return;
         deltaTime += Time.fixedDeltaTime;
         UpdateTransform();
     }
@@ -81,6 +85,7 @@ public class ControllerBase : MonoBehaviour
 
     protected virtual void Dead()
     {
-
+        state = Define.State.Die;
+        moveDirection = Vector2.zero;
     }
 }

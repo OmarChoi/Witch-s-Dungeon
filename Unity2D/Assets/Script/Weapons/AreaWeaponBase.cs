@@ -28,11 +28,17 @@ public class AreaWeaponBase : WeaponBase
         float timeLeft = Duration;
         while (timeLeft >= 0.0f)
         {
+            PlayAudio();
             ApplyDamage();
             yield return new WaitForSeconds(1 / AttackCycle);
             timeLeft -= (1 / AttackCycle);
         }
-        Managers.Pool.ReleaseObject(weaponName, this.gameObject);
+        Clear();
         yield break;
+    }
+
+    private void Clear()
+    {
+        Managers.Pool.ReleaseObject(weaponName, this.gameObject);
     }
 }

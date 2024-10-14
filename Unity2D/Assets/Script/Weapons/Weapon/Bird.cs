@@ -16,6 +16,5 @@ public class Bird : ProjectileBase
             spriteRenderer.flipX = false;
         else
             spriteRenderer.flipX = true;
-
     }
 }

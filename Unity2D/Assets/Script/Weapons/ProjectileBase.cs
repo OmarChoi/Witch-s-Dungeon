@@ -10,6 +10,10 @@ public class ProjectileBase : WeaponBase
         direction = Vector2.zero;
         SetDirection();
     }
+    public override void PlayAudio()
+    {
+
+    }
 
     public override void UpdateTransform()
     {

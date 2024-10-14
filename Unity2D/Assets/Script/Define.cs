@@ -7,13 +7,10 @@ public class Define
     public const int SpawnRange = 15;
     public const int MaxWeaponLevel = 5;
 
-    public enum Direction : byte
+    public enum Setting
     {
-        None = 0,
-        Up = 0x01,
-        Right = 0x02,
-        Down = 0x04,
-        Left = 0x08,
+        Screen,
+        Sound,
     }
 
     public enum State

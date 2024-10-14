@@ -4,9 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : ControllerBase
 {
     private Define.WeaponInfo[] weaponInfo = new Define.WeaponInfo[(int)Define.Weapon.WeaponTypeCount + (int)Define.Projectile.ProjectileTypeCount];
-    protected Define.State state = Define.State.Idle;
 
-    string baseWeapon = "FireField";
+    string baseWeapon = "Shuriken";
 
     public override void Init()
     {
@@ -19,7 +18,7 @@ public class PlayerController : ControllerBase
             weaponInfo[i].LastSpawnTime = -60.0f;
         }
         int idx = Define.GetWeaponIndex(baseWeapon);
-        weaponInfo[idx].WeaponLevel = 4;
+        weaponInfo[idx].WeaponLevel = 0;
         Managers.Scene.ChangeWeaponLevel(idx, weaponInfo[idx].WeaponLevel);
     }
 

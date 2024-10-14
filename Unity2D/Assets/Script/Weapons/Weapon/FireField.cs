@@ -16,4 +16,9 @@ public class FireField : AreaWeaponBase
         weaponPos = Managers.Player.transform.position;
         transform.position = weaponPos;
     }
+
+    public override void PlayAudio()
+    {
+
+    }
 }

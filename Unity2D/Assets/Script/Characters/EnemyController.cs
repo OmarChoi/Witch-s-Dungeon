@@ -59,6 +59,7 @@ public class EnemyController : ControllerBase
 
     protected override void Dead()
     {
+        state = Define.State.Die;
         StopAllCoroutines();
         Managers.Player.GetComponent<PlayerController>().AddExp(currentExp);
         Managers.Pool.ReleaseObject(enemyType, this.gameObject);

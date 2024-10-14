@@ -18,7 +18,7 @@ public class Shuriken : RicochetWeapon
     {
         if (target == null)
         {
-            Managers.Pool.ReleaseObject(weaponName, this.gameObject);
+            Clear();
             return;
         }
         Vector2 targetPos = target.transform.position;
