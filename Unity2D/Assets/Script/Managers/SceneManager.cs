@@ -1,5 +1,4 @@
 using System;
-using System.Xml.Linq;
 using UnityEngine;
 
 public class SceneManager
@@ -73,7 +72,9 @@ public class SceneManager
             scenes[(int)Scene.Game].GetComponent<GameScene>().GameEnd(false);
         }
         else if (SceneName == "Game")
+        {
             currentSceneIndex = (int)Scene.Game;
+        }
         UnityEngine.SceneManagement.SceneManager.LoadScene(SceneName);
     }
 

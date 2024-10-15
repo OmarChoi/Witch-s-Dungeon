@@ -68,12 +68,15 @@ public class EnemyController : ControllerBase
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Projectile") != true) return;
-        RicochetWeapon weapon = collision.GetComponent<RicochetWeapon>();
+        ProjectileBase weapon = collision.GetComponent<ProjectileBase>();
         if (weapon == null) return;
         float damage = weapon.Damage;
         GetDamage(damage);
-        Collider2D collider = this.GetComponent<Collider2D>();
-        weapon.Ricocheted(collider);
+
+        RicochetWeapon ricochetFactor = collision.GetComponent<RicochetWeapon>();
+        if (ricochetFactor ==  null) return;
+        Collider2D collider = GetComponent<Collider2D>();
+        ricochetFactor.Ricocheted(collider);
     }
 
     private void Attack()

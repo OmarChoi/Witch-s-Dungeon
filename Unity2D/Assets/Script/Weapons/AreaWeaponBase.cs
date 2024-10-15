@@ -1,11 +1,25 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AreaWeaponBase : WeaponBase
 {
+    AudioSource weaponAudio = null;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        weaponAudio = GetComponent<AudioSource>();
+    }
+
+    private void PlayEffectSound()
+    {
+        weaponAudio.Play();
+    }
+
     public override void Init()
     {
+        base.Init();
+        weaponAudio = GetComponent<AudioSource>();
         GetTargetInCircleArea();
         StartCoroutine(AttackEnemy());
     }
@@ -28,17 +42,12 @@ public class AreaWeaponBase : WeaponBase
         float timeLeft = Duration;
         while (timeLeft >= 0.0f)
         {
-            PlayAudio();
             ApplyDamage();
+            PlayEffectSound();
             yield return new WaitForSeconds(1 / AttackCycle);
             timeLeft -= (1 / AttackCycle);
         }
         Clear();
         yield break;
-    }
-
-    private void Clear()
-    {
-        Managers.Pool.ReleaseObject(weaponName, this.gameObject);
     }
 }

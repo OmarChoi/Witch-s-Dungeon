@@ -15,7 +15,6 @@ public class Managers : MonoBehaviour
 
     static GameObject playerCharacter = null;
 
-
     public static ResourceManager Resource { get { return Manager.resourceManager; } }
     public static PoolManager Pool { get { return Manager.poolManager; } }
     public static DataManager Data { get { return Manager.dataManager; } }

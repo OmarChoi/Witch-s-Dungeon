@@ -11,6 +11,7 @@ public class Bird : ProjectileBase
 
     protected override void SetDirection()
     {
+        base.SetDirection();
         direction = UnityEngine.Random.insideUnitCircle.normalized;
         if(direction.x < 0)
             spriteRenderer.flipX = false;

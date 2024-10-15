@@ -9,6 +9,7 @@ public class Shuriken : RicochetWeapon
 
     protected override void SetDirection()
     {
+        base.SetDirection();
         GetTargetInCircleArea();
         Transform target = null;
         if (monstersInRange.Length > 0 )
@@ -16,18 +17,19 @@ public class Shuriken : RicochetWeapon
             int randomIndex = Random.Range(0, monstersInRange.Length - 1);
             target = monstersInRange[randomIndex].transform;
         }
-        // 원 안에 있는 몬스터 중에 랜덤으로 Setting 되게 설정
+        else
+        {
+            direction = UnityEngine.Random.insideUnitCircle.normalized;
+        }
         CalculateDirection(target);
     }
 
     protected override void CalculateDirection(Transform target)
     {
-        if (target == null)
-        {
-            Clear();
-            return;
+        if (target != null)
+        { 
+            Vector2 targetPos = target.transform.position;
+            direction = (targetPos - weaponPos).normalized;
         }
-        Vector2 targetPos = target.transform.position;
-        direction = (targetPos - weaponPos).normalized;
     }
 }

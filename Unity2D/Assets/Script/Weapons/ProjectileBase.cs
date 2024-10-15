@@ -7,12 +7,9 @@ public class ProjectileBase : WeaponBase
 
     public override void Init()
     {
+        base.Init();
         direction = Vector2.zero;
         SetDirection();
-    }
-    public override void PlayAudio()
-    {
-
     }
 
     public override void UpdateTransform()

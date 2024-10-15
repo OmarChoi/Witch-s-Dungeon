@@ -1,7 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Xml;
+using System.IO;
 using UnityEngine;
+using UnityEditor.Overlays;
+
+public class SettingData
+{
+    public int width;
+    public int height;
+    public float musicVolume;
+    public float effectVolume;
+    public bool fullScreen;
+}
+
 
 public class DataManager
 {
@@ -10,12 +23,21 @@ public class DataManager
     Dictionary<string, string[]> weaponDescriptor = new Dictionary<string, string[]>();
     int[,] monsterAtMinuate = new int[Define.TotalTime, (int)Define.Monster.MonsterTypeCount];
     Define.Status playerStatus = new Define.Status(100.0f, 1.0f, 5.0f, 1.0f, 0);
+    SettingData settingData = new SettingData();
+    public int ScreenWidth { get { return settingData.width; } set { settingData.width = value; } }
+    public int ScreenHeight { get { return settingData.height; } set { settingData.height = value; } }
+    public float MusicVolume { get { return settingData.musicVolume; } set { settingData.musicVolume = value; } }
+    public float EffectVolume { get { return settingData.effectVolume; } set { settingData.effectVolume = value; } }
+    public bool IsFullScreen { get { return settingData.fullScreen; } set { settingData.fullScreen = value; } }
+
+    static string savePath = "";
     public void Init()
     {
         LoadEnemyData();
         LoadMonstersAtTime();
         LoadWeaponDescriptor();
         LoadWeaponDataPerLevel();
+        string path = Path.Combine(Application.dataPath, "setting.json");
     }
 
     #region Load Data
@@ -204,5 +226,9 @@ public class DataManager
         else
             return weaponDescriptor[weaponName][1];
     }
+    #endregion
+
+    #region Save Data
+
     #endregion
 }

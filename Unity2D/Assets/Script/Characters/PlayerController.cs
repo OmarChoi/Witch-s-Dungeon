@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class PlayerController : ControllerBase
 {
     private Define.WeaponInfo[] weaponInfo = new Define.WeaponInfo[(int)Define.Weapon.WeaponTypeCount + (int)Define.Projectile.ProjectileTypeCount];
-
+    AudioSource playerAudioSource = null;
+    AudioSource weaponAudioSource = null;
     string baseWeapon = "Shuriken";
 
     public override void Init()
@@ -20,6 +22,23 @@ public class PlayerController : ControllerBase
         int idx = Define.GetWeaponIndex(baseWeapon);
         weaponInfo[idx].WeaponLevel = 0;
         Managers.Scene.GameScene.ChangeWeaponLevel(idx, weaponInfo[idx].WeaponLevel);
+        SetAudio();
+    }
+
+    private void SetAudio()
+    {
+        playerAudioSource = this.gameObject.AddComponent<AudioSource>();
+        weaponAudioSource = this.gameObject.AddComponent<AudioSource>();
+        AudioMixerGroup[] effectGroups = Managers.Audio.Mixer.FindMatchingGroups("Effect");
+        if (effectGroups.Length == 0)
+            Debug.LogError("Can't Find Group 'Effect' In SoundMixer");
+        playerAudioSource.outputAudioMixerGroup = effectGroups[0];
+        weaponAudioSource.outputAudioMixerGroup = effectGroups[0];
+        weaponAudioSource.mute = false;
+        AudioClip audioClip = Managers.Resource.GetResource<AudioClip>("MoveAudio");
+        playerAudioSource.clip = audioClip;
+        playerAudioSource.loop = true;
+        playerAudioSource.Play();
     }
 
     public void Update()
@@ -41,12 +60,18 @@ public class PlayerController : ControllerBase
             {
                 GameObject weapon = Managers.Pool.GetObject(weaponInfo[i].Name, transform.position);
                 WeaponBase weaponController = weapon.GetComponent<WeaponBase>();
+
+                // Audio 설정
+                string clipName = weaponInfo[i].Name + "Audio";
+                AudioClip weaponAudio = Managers.Resource.GetResource<AudioClip>(clipName);
+                weaponAudioSource.PlayOneShot(weaponAudio);
+
+                // 무기 소환
                 if (weaponController != null)
-                {
                     weaponController.SpawnWeapon(transform.position, weaponInfo[i].WeaponLevel);
-                    weaponInfo[i].LastSpawnTime = ProgressTime;
-                }
             }
+            // 마지막 소환시간 설정을 통한 소환 주기 설정
+            weaponInfo[i].LastSpawnTime = ProgressTime;
         }
     }
 
@@ -65,7 +90,7 @@ public class PlayerController : ControllerBase
     private void OnMove(InputValue value)
     {
         if (state == Define.State.Die) return;
-            moveDirection = value.Get<Vector2>();
+        moveDirection = value.Get<Vector2>();
     }
 
     void GetKeyBoardInput()
@@ -85,6 +110,8 @@ public class PlayerController : ControllerBase
         switch(state)
         {
             case Define.State.Move:
+                if (playerAudioSource.mute == true)
+                    playerAudioSource.mute = false;
                 animator.Play("Move");
                 if (moveDirection.x < 0)
                     spriteRenderer.flipX = true;
@@ -92,9 +119,12 @@ public class PlayerController : ControllerBase
                     spriteRenderer.flipX = false;
                 break;
             case Define.State.Idle:
+                if (playerAudioSource.mute == false)
+                    playerAudioSource.mute = true;
                 animator.Play("Idle");
                 break;
             case Define.State.Die:
+                playerAudioSource.mute = true;
                 animator.Play("Die");
                 break;
         }
