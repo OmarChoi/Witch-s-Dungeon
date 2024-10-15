@@ -10,15 +10,18 @@ public class Managers : MonoBehaviour
     PoolManager poolManager = new PoolManager();
     DataManager dataManager = new DataManager();
     SoundManager soundManager= new SoundManager();
+    UIManger uiManager= new UIManger();
+    SceneManager sceneManager= new SceneManager();
 
     static GameObject playerCharacter = null;
-    static GameScene gameScene = null;
-    
+
 
     public static ResourceManager Resource { get { return Manager.resourceManager; } }
     public static PoolManager Pool { get { return Manager.poolManager; } }
     public static DataManager Data { get { return Manager.dataManager; } }
     public static SoundManager Audio { get { return Manager.soundManager; } }
+    public static UIManger UI { get { return Manager.uiManager; } }
+    public static SceneManager Scene { get { return Manager.sceneManager; } }
 
     public static GameObject Player { get { return playerCharacter; } 
         set
@@ -29,8 +32,6 @@ public class Managers : MonoBehaviour
             }
         }
     }
-
-    public static GameScene Scene { get { return gameScene; } set { gameScene = value; } }
 
     static void Init() 
     {
@@ -49,6 +50,8 @@ public class Managers : MonoBehaviour
             Resource.Init();
             Data.Init();
             Audio.Init();
+            UI.Init();
+            Scene.Init();
         }
     }
 

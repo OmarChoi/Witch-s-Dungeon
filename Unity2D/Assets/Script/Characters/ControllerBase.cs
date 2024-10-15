@@ -11,7 +11,7 @@ public class ControllerBase : MonoBehaviour
     protected Define.State state = Define.State.Idle;
 
     private float deltaTime = 0.0f;
-    public int currentExp = 0;
+    public float currentExp = 0;
     public int currentLevel = 1;
 
     public float HP { get { return status.CurrentHp; } protected set { status.CurrentHp = value; } }

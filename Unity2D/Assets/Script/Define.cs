@@ -4,7 +4,7 @@ public class Define
 {
     public const int TotalTime = 15;
     public const int SpawnCycle = 3;
-    public const int SpawnRange = 15;
+    public const int SpawnRange = 20;
     public const int MaxWeaponLevel = 5;
 
     public enum Setting
@@ -88,9 +88,9 @@ public class Define
         public float AttackSpeed;
         public float Speed;
         public float Damage;
-        public int Exp;
+        public float Exp;
 
-        public Status(float hp = 0.0f, float attackspeed = 0.0f, float speed = 0.0f, float damage = 0.0f, int exp = 0)
+        public Status(float hp = 0.0f, float attackspeed = 0.0f, float speed = 0.0f, float damage = 0.0f, float exp = 0)
         {
             MaxHp = hp;
             CurrentHp = hp;

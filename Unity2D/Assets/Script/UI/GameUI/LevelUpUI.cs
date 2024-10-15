@@ -12,9 +12,15 @@ public class LevelUpUI : MonoBehaviour
         Managers.Resource.LoadResourcesInFolder<Sprite>("Icon/Weapons");
     }
 
-    public void SpawnLevelUpUI()
+    private void OnEnable()
     {
-        this.gameObject.SetActive(true);
+        if (Managers.Player == null) return;
+        Managers.UI.SetEscapeEnable(false);
+        SpawnUI();
+    }
+
+    public void SpawnUI()
+    {
         int nMaxWeaponCount = 0;
         for (int i = 0; i < weaponNum; ++i)
         {
@@ -27,8 +33,8 @@ public class LevelUpUI : MonoBehaviour
         }
         if(nMaxWeaponCount == weaponNum)
         {
-            Time.timeScale = 1.0f;
-            this.gameObject.SetActive(false);
+            Managers.UI.SetEscapeEnable(true);
+            Managers.UI.DeActivateUI();
             return;
         }
         int nCanChoice = weaponNum - nMaxWeaponCount;

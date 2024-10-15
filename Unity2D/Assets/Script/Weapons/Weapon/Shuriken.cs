@@ -10,7 +10,13 @@ public class Shuriken : RicochetWeapon
     protected override void SetDirection()
     {
         GetTargetInCircleArea();
-        Transform target = GetNearestTarget();
+        Transform target = null;
+        if (monstersInRange.Length > 0 )
+        {
+            int randomIndex = Random.Range(0, monstersInRange.Length - 1);
+            target = monstersInRange[randomIndex].transform;
+        }
+        // 원 안에 있는 몬스터 중에 랜덤으로 Setting 되게 설정
         CalculateDirection(target);
     }
 

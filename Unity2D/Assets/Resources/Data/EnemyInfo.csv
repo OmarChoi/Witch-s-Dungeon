@@ -1,5 +1,5 @@
 MonsterType,Hp,AttackSpeed,Speed,Damage,Exp
-Mouse,75,1.5,4,4,1
+Mouse,75,1.5,4,4,0.5
 Slime,200,0.5,2,15,1
 Skeleton,100,1,4,10,2
 Ghost,50,3,6,4,3

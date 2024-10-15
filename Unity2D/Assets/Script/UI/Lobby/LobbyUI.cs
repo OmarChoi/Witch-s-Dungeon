@@ -22,7 +22,7 @@ public class LobbyUI : MonoBehaviour
                 Invoke("LoadGameScene", fadeDuration);
                 break;
             case "Option":
-                optionUI.SetActive(true);
+                Managers.UI.ActivateUI("OptionUI");
                 break;
             case "Quit":
                 Application.Quit();
@@ -32,6 +32,6 @@ public class LobbyUI : MonoBehaviour
 
     private void LoadGameScene()
     {
-        SceneManager.LoadScene("Game");
+        Managers.Scene.LoadScene("Game");
     }
 }

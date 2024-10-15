@@ -38,8 +38,9 @@ public class WeaponOptionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             Managers.Player.GetComponent<PlayerController>().SetWeaponLevel(weaponIndex, nextLevel);
-            Managers.Scene.ChangeWeaponLevel(weaponIndex, nextLevel);
-            LevelUpUI.SetActive(false);
+            Managers.Scene.GameScene.ChangeWeaponLevel(weaponIndex, nextLevel);
+            Managers.UI.SetEscapeEnable(true);
+            Managers.UI.DeActivateUI();
             Time.timeScale = 1.0f;
         }
     }

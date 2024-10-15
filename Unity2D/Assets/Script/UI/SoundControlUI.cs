@@ -9,7 +9,6 @@ public class SoundControlUI : MonoBehaviour
     {
         Managers.Audio.SetAudioVolume("Music", musicSound.value);
         Managers.Audio.SetAudioVolume("Effect", effectSound.value);
-
-        this.transform.parent.gameObject.SetActive(false);
+        Managers.UI.DeActivateUI();
     }
 }

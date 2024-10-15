@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +11,17 @@ public class OptionUI : MonoBehaviour
         { 1920, 1080 },
         { 2560, 1440 }
     };
+
+    public void Awake()
+    {
+#if UNITY_ANDROID
+        GameObject ScreenDropDown = Utils.FindObjectInChild(this.gameObject, "Screen");
+        if(ScreenDropDown != null)
+        {
+            ScreenDropDown.SetActive(false);
+        }
+#endif
+    }
 
     public void ButtonClicked(string name)
     {
@@ -32,10 +42,10 @@ public class OptionUI : MonoBehaviour
                 Screen.SetResolution(width, height, bFullScreen);
                 break;
             case "Sound":
-                soundController.gameObject.SetActive(true);
+                Managers.UI.ActivateUI("SoundControllerUI");
                 break;
             case "Quit":
-                this.gameObject.SetActive(false);
+                Managers.UI.DeActivateUI();
                 break;
         }
     }

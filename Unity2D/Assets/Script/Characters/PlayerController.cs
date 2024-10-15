@@ -19,7 +19,7 @@ public class PlayerController : ControllerBase
         }
         int idx = Define.GetWeaponIndex(baseWeapon);
         weaponInfo[idx].WeaponLevel = 0;
-        Managers.Scene.ChangeWeaponLevel(idx, weaponInfo[idx].WeaponLevel);
+        Managers.Scene.GameScene.ChangeWeaponLevel(idx, weaponInfo[idx].WeaponLevel);
     }
 
     public void Update()
@@ -70,6 +70,10 @@ public class PlayerController : ControllerBase
 
     void GetKeyBoardInput()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Managers.UI.DeActivateUI();
+        }
         if (moveDirection.magnitude == 0)
             state = Define.State.Idle;
         else
@@ -96,7 +100,7 @@ public class PlayerController : ControllerBase
         }
     }
 
-    public void AddExp(int exp)
+    public void AddExp(float exp)
     {
         currentExp += exp;
         int requiredExp = Managers.Data.GetRequiredExpPerLevel(currentLevel);
@@ -104,7 +108,7 @@ public class PlayerController : ControllerBase
         {
             currentExp -= requiredExp;
             currentLevel += 1;
-            Managers.Scene.SpawnLevelUpUI();
+            Managers.Scene.GameScene.SpawnLevelUpUI();
         }
     }
 
@@ -125,6 +129,6 @@ public class PlayerController : ControllerBase
 
     protected override void Dead()
     {
-        Managers.Scene.GameEnd();
+        Managers.Scene.GameScene.GameEnd();
     }
 }

@@ -22,11 +22,16 @@ public class GameSceneUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        int currentExp = Managers.Player.GetComponent<ControllerBase>().currentExp;
+        float currentExp = Managers.Player.GetComponent<ControllerBase>().currentExp;
         int currentLevel = Managers.Player.GetComponent<ControllerBase>().currentLevel;
         int totalExp = Managers.Data.GetRequiredExpPerLevel(currentLevel);
-        expBar.value = (float)currentExp / totalExp;
+        expBar.value = currentExp / totalExp;
         hpBar.value = (float)Managers.Player.GetComponent<ControllerBase>().HP / Managers.Player.GetComponent<ControllerBase>().MaxHp;
         levelText.text = $"{currentLevel.ToString("D2")}";
+    }
+
+    private void Pause()
+    {
+
     }
 }

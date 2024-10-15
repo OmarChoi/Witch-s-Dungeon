@@ -55,7 +55,7 @@ public class DataManager
                     data["AttackSpeed"],
                     data["Speed"],
                     data["Damage"],
-                    (int)data["Exp"]
+                    data["Exp"]
                 ));
             }
         }
@@ -188,7 +188,8 @@ public class DataManager
     public int GetRequiredExpPerLevel(int level)
     {
         // Level에 따른 경험치 증가 수식
-        return (int)(MathF.Log10(level * level * 100) + level) * 8;
+        // return (int)(MathF.Log10(level * level * level * 1000) + level) * 8;
+        return level * level + level * 20;
     }
 
     public string GetWeaponDescriptor(string weaponName, bool IsFirstSelect)

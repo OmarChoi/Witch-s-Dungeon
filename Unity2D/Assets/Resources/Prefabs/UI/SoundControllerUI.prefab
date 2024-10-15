@@ -1443,7 +1443,7 @@ GameObject:
   - component: {fileID: 5934697466889053423}
   - component: {fileID: 1552748948575416852}
   m_Layer: 5
-  m_Name: SoundController
+  m_Name: SoundControllerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

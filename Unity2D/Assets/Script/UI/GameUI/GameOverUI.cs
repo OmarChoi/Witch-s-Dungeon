@@ -22,7 +22,8 @@ public class GameOverUI : MonoBehaviour
             if (Input.anyKey)
             {
                 Managers.Player.SetActive(false);
-                SceneManager.LoadScene("Lobby");
+                Managers.UI.GetUIObject(name).SetActive(false);
+                Managers.Scene.LoadScene("Lobby");
             }
         }
     }
