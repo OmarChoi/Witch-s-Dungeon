@@ -14,8 +14,7 @@ public class SoundControlUI : MonoBehaviour
 
     public void Save()
     {
-        Managers.Audio.SetAudioVolume("Music", musicSound.value);
-        Managers.Audio.SetAudioVolume("Effect", effectSound.value);
+        Managers.Data.SettingVolume(musicSound.value, effectSound.value);
         Managers.UI.DeActivateUI();
     }
 }

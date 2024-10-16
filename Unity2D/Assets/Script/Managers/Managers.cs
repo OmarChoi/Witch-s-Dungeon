@@ -47,15 +47,20 @@ public class Managers : MonoBehaviour
             s_Manager = obj.GetComponent<Managers>();
             Pool.Init();
             Resource.Init();
-            Data.Init();
             Audio.Init();
             UI.Init();
+            Data.Init();
             Scene.Init();
         }
+    }
+    private void OnApplicationQuit()
+    {
+        Clear();
     }
 
     public static void Clear() 
     {
+        Data.Clear();
         s_Manager = null;
     }
 }

@@ -1,20 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Xml;
 using System.IO;
 using UnityEngine;
-using UnityEditor.Overlays;
 
+[System.Serializable]
 public class SettingData
 {
-    public int width;
-    public int height;
-    public float musicVolume;
-    public float effectVolume;
-    public bool fullScreen;
+    public int width = 1920;
+    public int height = 1080;
+    public float musicVolume = 0.5f;
+    public float effectVolume = 0.5f;
+    public bool fullScreen = true;
 }
-
 
 public class DataManager
 {
@@ -30,14 +28,17 @@ public class DataManager
     public float EffectVolume { get { return settingData.effectVolume; } set { settingData.effectVolume = value; } }
     public bool IsFullScreen { get { return settingData.fullScreen; } set { settingData.fullScreen = value; } }
 
-    static string savePath = "";
+    public string savePath = "";
+
     public void Init()
     {
+
+        savePath = Path.Combine(Application.dataPath + "/Data/", "settings.json");
+        LoadSettings();
         LoadEnemyData();
         LoadMonstersAtTime();
         LoadWeaponDescriptor();
         LoadWeaponDataPerLevel();
-        string path = Path.Combine(Application.dataPath, "setting.json");
     }
 
     #region Load Data
@@ -163,6 +164,20 @@ public class DataManager
             }
         }
     }
+
+    public void LoadSettings()
+    {
+        if (!File.Exists(savePath))
+        {
+            string newFile = JsonUtility.ToJson(settingData, true);
+            File.WriteAllText(savePath, newFile);
+        }
+        string json = File.ReadAllText(savePath);
+        settingData = JsonUtility.FromJson<SettingData>(json);
+        SettingVolume(settingData.musicVolume, settingData.effectVolume);
+        SettingScreenSize(settingData.width, settingData.height, settingData.fullScreen);
+    }
+
     #endregion
 
     #region Get Data
@@ -229,6 +244,32 @@ public class DataManager
     #endregion
 
     #region Save Data
+    public void SettingScreenSize(int width,  int height, bool fullScreen)
+    {
+        settingData.width = width; 
+        settingData.height = height;
+        settingData.fullScreen = fullScreen;
+        Screen.SetResolution(width, height, fullScreen);
+    }
 
+    public void SettingVolume(float music, float effect)
+    {
+        settingData.musicVolume = music;
+        settingData.effectVolume = effect;
+        Managers.Audio.SetAudioVolume("Music", settingData.musicVolume);
+        Managers.Audio.SetAudioVolume("Effect", settingData.effectVolume);
+    }
+
+    public void SaveSettings()
+    {
+        Debug.Log("SaveSettings");
+        string json = JsonUtility.ToJson(settingData, true);
+        File.WriteAllText(savePath, json);
+    }
     #endregion
+
+    public void Clear()
+    {
+        SaveSettings();
+    }
 }

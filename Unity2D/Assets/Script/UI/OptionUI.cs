@@ -39,7 +39,7 @@ public class OptionUI : MonoBehaviour
                 }
                 width = resolution[selectindex, 0];
                 height = resolution[selectindex, 1];
-                Screen.SetResolution(width, height, bFullScreen);
+                Managers.Data.SettingScreenSize(width, height, bFullScreen);
                 break;
             case "Sound":
                 Managers.UI.ActivateUI("SoundControllerUI");
