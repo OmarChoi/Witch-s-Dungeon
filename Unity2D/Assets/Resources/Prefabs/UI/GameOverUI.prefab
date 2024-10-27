@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420da19f936104b46a1438581e9b0343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killCount: {fileID: 2434912322009900048}
+  surviveTime: {fileID: 8040518474751546935}
 --- !u!1 &1263727204155061064
 GameObject:
   m_ObjectHideFlags: 0

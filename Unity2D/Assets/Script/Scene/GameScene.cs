@@ -2,18 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Define;
 
 public class GameScene : SceneBase
 {
     GameObject playerCharacter;
     List<GameObject> monsters = new List<GameObject>();
     public GameSceneUI sceneUI;
-
-    double deltaTime = 0;
+    public int KiilCount = 0;
+    public double deltaTime = 0;
 
     private void Awake()
     {
+        Cursor.visible = false;
         Managers.Scene.SetScene("Game", this.gameObject);
         Init();
     }

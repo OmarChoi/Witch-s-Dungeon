@@ -43,6 +43,8 @@ public class PlayerController : ControllerBase
 
     public void Update()
     {
+        if (state == Define.State.Die)
+            return;
         GetKeyBoardInput();
         SpawnWeapon();
     }
@@ -159,6 +161,9 @@ public class PlayerController : ControllerBase
 
     protected override void Dead()
     {
+        base.Dead();
+        playerAudioSource.mute = true;
+        weaponAudioSource.mute = true;
         Managers.Scene.GameScene.GameEnd();
     }
 }

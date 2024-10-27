@@ -135,6 +135,7 @@ public class DataManager
             Type fieldType = fields[i].FieldType;
             if (fieldType == typeof(float))
             {
+                fields[i].SetValue()
                 fields[i].SetValueDirect(__makeref(weaponData), float.Parse(values[i + 1]));
             }
             else if (fieldType == typeof(int))
@@ -262,7 +263,6 @@ public class DataManager
 
     public void SaveSettings()
     {
-        Debug.Log("SaveSettings");
         string json = JsonUtility.ToJson(settingData, true);
         File.WriteAllText(savePath, json);
     }

@@ -14,8 +14,13 @@ public class WeaponOptionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
     private int weaponIndex;
     private int nextLevel = 0;
 
+    public void OnEnable()
+    {
+    }
+
     public void SetUI(string name, int nextlv)
     {
+        this.gameObject.transform.localScale = Vector3.one;
         this.gameObject.SetActive(true);
         weaponIndex = Define.GetWeaponIndex(name);
         weaponImage.sprite = Managers.Resource.GetResource<Sprite>(name + "Icon");
@@ -41,7 +46,7 @@ public class WeaponOptionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
             Managers.Scene.GameScene.ChangeWeaponLevel(weaponIndex, nextLevel);
             Managers.UI.SetEscapeEnable(true);
             Managers.UI.DeActivateUI();
-            Time.timeScale = 1.0f;
+            Managers.Audio.ResumeAudio();
         }
     }
 

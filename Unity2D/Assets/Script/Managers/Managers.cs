@@ -36,7 +36,6 @@ public class Managers : MonoBehaviour
     {
         if (s_Manager == null) 
         {
-            Debug.Log("Init Manager");
             GameObject obj = GameObject.Find("ManagerSet");
             if (obj == null) 
             {

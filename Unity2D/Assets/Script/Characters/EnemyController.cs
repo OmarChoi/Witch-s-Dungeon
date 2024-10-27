@@ -63,6 +63,8 @@ public class EnemyController : ControllerBase
         StopAllCoroutines();
         Managers.Player.GetComponent<PlayerController>().AddExp(currentExp);
         Managers.Pool.ReleaseObject(enemyType, this.gameObject);
+        GameScene currentScene = Managers.Scene.CurrentScene.GetComponent<GameScene>();
+        currentScene.KiilCount++;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

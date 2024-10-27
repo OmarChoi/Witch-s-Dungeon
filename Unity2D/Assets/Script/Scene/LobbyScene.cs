@@ -4,6 +4,7 @@ public class LobbyScene : SceneBase
 {
     public void Awake()
     {
+        Cursor.visible = true;
         Managers.Scene.SetScene("Lobby", this.gameObject);
     }
 

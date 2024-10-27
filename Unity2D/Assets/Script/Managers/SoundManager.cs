@@ -32,5 +32,13 @@ public class SoundManager
         return AudioVolume[GetVolumeTypeIndex(type)];
     }
 
+    public void PauseAudio()
+    {
+        audioMixer.SetFloat("Effect", Mathf.Log10(0.001f) * 20);
+    }
 
+    public void ResumeAudio()
+    {
+        SetAudioVolume("Effect", AudioVolume[GetVolumeTypeIndex("Effect")]);
+    }
 }

@@ -26,6 +26,7 @@ public class UIManger
     public void ActivateUI(string uiName)
     {
         Time.timeScale = 0.0f;
+        Cursor.visible = true;
         if (uiObjectDictionary.ContainsKey(uiName))
         {
             uiObjectDictionary[uiName].SetActive(true);
@@ -47,6 +48,7 @@ public class UIManger
                     ActivateUI("ExitGameUI");
                     break;
                 case "Game":
+                    Cursor.visible = false;
                     ActivateUI("PauseUI");
                     break;
             }
@@ -56,6 +58,13 @@ public class UIManger
             GameObject ui = ActiveUI.Pop();
             sortLayerIndex -= 1;
             ui.SetActive(false);
+            if (Managers.Scene.CurrentSceneName == "Game")
+            {
+                if(ActiveUI.Count == 0)
+                {
+                    Cursor.visible = false;
+                }
+            }
             Time.timeScale = 1.0f;
         }
     }

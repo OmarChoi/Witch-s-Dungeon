@@ -15,6 +15,7 @@ public class LevelUpUI : MonoBehaviour
     private void OnEnable()
     {
         if (Managers.Player == null) return;
+        Managers.Audio.PauseAudio();
         Managers.UI.SetEscapeEnable(false);
         SpawnUI();
     }
@@ -45,6 +46,7 @@ public class LevelUpUI : MonoBehaviour
             if (nCanChoice < i + 1) 
             { 
                 selectOptionUI.SetUIOff();
+                Managers.Audio.ResumeAudio();
                 continue;
             }
             int maxLevelCount = 0;
